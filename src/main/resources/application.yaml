@@ -1,0 +1,16 @@
+morador:
+  topic:
+    name: morador-mq
+
+residencia:
+  topic:
+    name: residencia-mq
+    
+veiculo:
+  topic:
+    name: veiculo-mq
+    
+visita:
+  topic:
+    name: visita-mq
+  
