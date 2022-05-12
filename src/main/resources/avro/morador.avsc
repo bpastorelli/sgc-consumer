@@ -1,7 +1,7 @@
 {
 	"type": "record",
 	"name": "MoradorAvro",
-	"namespace": "br.com.sgc",
+	"namespace": "br.com.sgc.consumer",
 	"fields": [
 		{
 			"name": "id",

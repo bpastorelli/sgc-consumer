@@ -2,7 +2,7 @@ package br.com.sgc.consumer.dto;
 
 import java.io.Serializable;
 
-import br.com.sgc.PerfilEnum;
+import br.com.sgc.consumer.enums.PerfilEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

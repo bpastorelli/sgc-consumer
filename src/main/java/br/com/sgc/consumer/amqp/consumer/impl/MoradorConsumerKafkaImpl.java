@@ -4,7 +4,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import br.com.sgc.MoradorAvro;
+import br.com.sgc.consumer.MoradorAvro;
 import br.com.sgc.consumer.amqp.consumer.AmqpConsumer;
 import lombok.extern.slf4j.Slf4j;
 
