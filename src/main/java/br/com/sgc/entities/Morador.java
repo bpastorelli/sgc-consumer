@@ -1,4 +1,4 @@
-package br.com.sgc.consumer.entities;
+package br.com.sgc.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.com.sgc.consumer.enums.PerfilEnum;
+import br.com.sgc.enums.PerfilEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

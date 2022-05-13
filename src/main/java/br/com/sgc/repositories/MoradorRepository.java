@@ -1,4 +1,4 @@
-package br.com.sgc.consumer.repositories;
+package br.com.sgc.repositories;
 
 import java.util.Optional;
 
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.sgc.consumer.entities.Morador;
+import br.com.sgc.entities.Morador;
 
 @Repository
 @Transactional(readOnly = true)

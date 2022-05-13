@@ -1,12 +1,12 @@
-package br.com.sgc.consumer.mapper;
+package br.com.sgc.mapper;
 
 import java.util.List;
 
 import org.mapstruct.Mapper;
 
 import br.com.sgc.MoradorAvro;
-import br.com.sgc.consumer.dto.MoradorDto;
-import br.com.sgc.consumer.entities.Morador;
+import br.com.sgc.dto.MoradorDto;
+import br.com.sgc.entities.Morador;
 
 @Mapper(componentModel = "spring")
 public abstract class MoradorMapper {

@@ -1,4 +1,4 @@
-package br.com.sgc.consumer.enums;
+package br.com.sgc.enums;
 
 public enum TipoEnum {
 	INICIO_TRABALHO,

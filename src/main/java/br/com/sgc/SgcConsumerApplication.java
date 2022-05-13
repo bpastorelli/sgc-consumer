@@ -1,4 +1,4 @@
-package br.com.sgc.consumer;
+package br.com.sgc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
