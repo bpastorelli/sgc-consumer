@@ -72,6 +72,8 @@ public class Morador implements Serializable {
 	@Column(name = "DATA_ATUALIZACAO", nullable = false)
 	private Date dataAtualizacao;
 	
+	private Long residenciaId;
+	
 	@Column(name = "ASSOCIADO", nullable = false)
 	private Long associado;
 	

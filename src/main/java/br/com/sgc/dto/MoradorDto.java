@@ -34,7 +34,7 @@ public class MoradorDto implements Serializable {
 	
 	private Long residenciaId;
 	
-	private String associado;
+	private Long associado;
 	
 	private String posicao;
 	
