@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 
-import br.com.sgc.consumer.MoradorAvro;
+import br.com.sgc.MoradorAvro;
 import br.com.sgc.consumer.dto.MoradorDto;
 import br.com.sgc.consumer.entities.Morador;
 

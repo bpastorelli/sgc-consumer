@@ -1,8 +1,9 @@
 package br.com.sgc.consumer.amqp.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.kafka.support.Acknowledgment;
 
 public interface AmqpConsumer<T> {
 	
-	void consumer(ConsumerRecord<String, T> message);
+	void consumer(ConsumerRecord<String, T> record, Acknowledgment ack);
 }
