@@ -15,6 +15,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.sgc.enums.PerfilEnum;
 import lombok.AllArgsConstructor;
@@ -72,6 +73,7 @@ public class Morador implements Serializable {
 	@Column(name = "DATA_ATUALIZACAO", nullable = false)
 	private Date dataAtualizacao;
 	
+	@Transient
 	private Long residenciaId;
 	
 	@Column(name = "ASSOCIADO", nullable = false)

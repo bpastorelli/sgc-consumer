@@ -19,7 +19,7 @@ import br.com.sgc.repositories.ResidenciaRepository;
 import br.com.sgc.validators.Validators;
 
 @Component
-public class ValidarCadastroMorador implements Validators<List<MoradorDto>> {
+public class ValidarCadastroMorador implements Validators<MoradorDto> {
 	
 	@Autowired
 	private MoradorRepository moradorRepository;
@@ -29,6 +29,7 @@ public class ValidarCadastroMorador implements Validators<List<MoradorDto>> {
 	
 	private static final String TITULO = "Cadastro de morador recusado!";
 	
+	@Override
 	public List<ErroRegistro> validar(MoradorDto t) throws RegistroException {
 		
 		List<MoradorDto> list = new ArrayList<MoradorDto>();

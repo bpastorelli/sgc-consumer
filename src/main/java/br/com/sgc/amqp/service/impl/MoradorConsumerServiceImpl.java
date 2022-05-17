@@ -58,7 +58,7 @@ public class MoradorConsumerServiceImpl implements ConsumerService<MoradorDto> {
 		
 		if(response.getErrors().size() > 0) {			
 			response.getErrors().forEach(erro -> {
-				throw new AmqpRejectAndDontRequeueException(erro.getDetalhe()); 
+				throw new AmqpRejectAndDontRequeueException(erro.getDetalhe(), true, null); 
 			});			
 		}else {
 			if(message.getResidenciaId() != 0L) {

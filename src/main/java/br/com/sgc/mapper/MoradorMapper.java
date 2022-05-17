@@ -23,8 +23,9 @@ public abstract class MoradorMapper {
 	
 	public abstract MoradorAvro moradorDtoToMoradorAvro(MoradorDto dto);
 	
-	@Mapping(target = "morador.id", source = "id")
-	@Mapping(target = "residencia.id", source = "residenciaId")
+	@Mapping(target = "morador.guide", source = "dto.guide")
+	@Mapping(target = "morador.id", source = "dto.id")
+	@Mapping(target = "residencia.id", source = "dto.residenciaId")
 	public abstract VinculoResidencia moradorDtoToVinculoResidencia(Morador dto);
 
 }
