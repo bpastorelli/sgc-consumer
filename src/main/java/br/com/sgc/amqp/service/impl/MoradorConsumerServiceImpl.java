@@ -11,7 +11,7 @@ import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.dto.MoradorDto;
 import br.com.sgc.dto.ResponsePublisherDto;
 import br.com.sgc.entities.Morador;
-import br.com.sgc.enums.PerfilEnum;
+import br.com.sgc.PerfilEnum;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.errorheadling.RegistroException;
 import br.com.sgc.mapper.MoradorMapper;
@@ -38,7 +38,7 @@ public class MoradorConsumerServiceImpl implements ConsumerService<MoradorDto> {
 	private Validators<MoradorDto> validator;
 	
 	@Override
-	public void action(MoradorDto message) throws RegistroException {
+	public void action(MoradorDto dto) throws RegistroException {
 		
 		log.info("Persistindo registro...");
 		
@@ -46,22 +46,22 @@ public class MoradorConsumerServiceImpl implements ConsumerService<MoradorDto> {
 		
 		List<Morador> listMorador = new ArrayList<Morador>();
 		
-		Morador morador = this.moradorMapper.moradorDtoToMorador(message);
+		Morador morador = this.moradorMapper.moradorDtoToMorador(dto);
 		
 		morador.setSenha(PasswordUtils.gerarBCrypt(morador.getCpf().substring(0, 6)));
 		morador.setPerfil(morador.getPerfil() == null ? PerfilEnum.ROLE_USUARIO : morador.getPerfil());
 		
 		listMorador.add(morador);
 		
-		List<ErroRegistro> errors = this.validator.validar(message);
+		List<ErroRegistro> errors = this.validator.validar(dto);
 		response.setErrors(errors);
 		
 		if(response.getErrors().size() > 0) {			
 			response.getErrors().forEach(erro -> {
-				throw new AmqpRejectAndDontRequeueException(erro.getDetalhe(), true, null); 
+				throw new AmqpRejectAndDontRequeueException(erro.getDetalhe()); 
 			});			
 		}else {
-			if(message.getResidenciaId() != 0L) {
+			if(dto.getResidenciaId() != 0L) {
 				vinculoResidenciaRepository.save(this.moradorMapper.moradorDtoToVinculoResidencia(this.moradorRepository.save(morador)));				
 			}else {
 				this.moradorRepository.saveAll(listMorador);

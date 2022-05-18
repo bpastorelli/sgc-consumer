@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import br.com.sgc.MoradorAvro;
 import br.com.sgc.amqp.consumer.AmqpConsumer;
 import br.com.sgc.amqp.service.ConsumerService;
+import br.com.sgc.converter.ConvertAvroToObject;
 import br.com.sgc.dto.MoradorDto;
-import br.com.sgc.enums.PerfilEnum;
 import br.com.sgc.errorheadling.RegistroException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,25 +21,15 @@ public class MoradorConsumerKafkaImpl implements AmqpConsumer<MoradorAvro> {
 	@Autowired
 	private ConsumerService<MoradorDto> consumerService;
 	
+	@Autowired
+	private ConvertAvroToObject<MoradorDto, MoradorAvro> converter;
+	
 	@KafkaListener(topics = "${morador.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
 	public void consumer(ConsumerRecord<String, MoradorAvro> message, Acknowledgment ack) throws RegistroException {
 		
 		log.info("Recebida a mensagem, enviando para o serviço...");
-		
-		MoradorDto moradorDto = MoradorDto
-				.builder()
-				.id(message.value().getId())
-				.nome(message.value().getNome().toString())
-				.rg(message.value().getRg().toString())
-				.cpf(message.value().getCpf().toString())
-				.email(message.value().getEmail().toString())
-				.associado(message.value().getAssociado())
-				.celular(message.value().getCelular().toString())
-				.telefone(message.value().getTelefone().toString())
-				.residenciaId(message.value().getResidenciaId())
-				.guide(message.value().getGuide().toString())
-				.perfil(message.value().getPerfil().ordinal() == 0 ? PerfilEnum.ROLE_ADMIN : PerfilEnum.ROLE_USUARIO)
-				.build();
+
+		MoradorDto moradorDto = this.converter.convert(message.value());
 		
 		this.consumerService.action(moradorDto);
 		
