@@ -7,4 +7,4 @@ RUN addgroup -S spring && adduser -S spring -G spring
 MAINTAINER Bruno Pastorelli
 COPY target/sgc_consumer.jar sgc_consumer.jar
 ENTRYPOINT ["java","-jar","/sgc_consumer.jar"]
-EXPOSE 9090
+EXPOSE 9191
