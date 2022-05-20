@@ -13,3 +13,7 @@ veiculo:
 visita:
   topic:
     name: visita-mq
+    
+visitante:
+  topic:
+    name: visitante-mq
