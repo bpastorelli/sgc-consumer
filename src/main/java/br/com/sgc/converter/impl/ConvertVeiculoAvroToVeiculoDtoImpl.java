@@ -14,7 +14,7 @@ public class ConvertVeiculoAvroToVeiculoDtoImpl implements ConvertAvroToObject<V
 		
 		VeiculoDto veiculoDto = VeiculoDto
 				.builder()
-				.placa(avro.getPlaca().toString())
+				.placa(avro.getPlaca().toString().replace("-", ""))
 				.marca(avro.getMarca().toString())
 				.modelo(avro.getModelo().toString())
 				.cor(avro.getCor().toString())
