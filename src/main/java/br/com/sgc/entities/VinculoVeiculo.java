@@ -13,10 +13,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "vinculo_veiculo")
 public class VinculoVeiculo implements Serializable {
 	
@@ -42,10 +46,6 @@ public class VinculoVeiculo implements Serializable {
     
     @Column(name = "guide", nullable = false)
 	private String    guide;
-
-	public VinculoVeiculo() {
-		
-	}
 	
     @PrePersist
     public void prePersist() {
@@ -53,10 +53,4 @@ public class VinculoVeiculo implements Serializable {
         dataVinculo = atual;
         posicao = 1L;
     }
-    
-	@Override
-	public String toString() {
-		return "Vinculo [id=" + id + ", visitante =" + visitante + ", veiculo = " + veiculo + ", dataVinculo=" + dataVinculo + ", guide=" + guide + "]";
-	}	
-	
 }

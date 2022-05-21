@@ -13,6 +13,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -59,6 +60,9 @@ public class Veiculo implements Serializable {
 
 	@Column(name = "guide", nullable = true)
 	private String guide;
+	
+	@Transient
+	private Long visitanteId;
 	
 	@PreUpdate
     public void preUpdate() {

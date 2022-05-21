@@ -20,6 +20,7 @@ public class ConvertVisitanteAvroToVisitanteDtoImpl implements ConvertAvroToObje
 				.cep(avro.getCep().toString())
 				.endereco(avro.getEndereco().toString().toUpperCase())
 				.numero(avro.getNumero().toString())
+				.bairro(avro.getBairro().toString())
 				.complemento(avro.getComplemento().toString().toUpperCase())
 				.cidade(avro.getCidade().toString().toUpperCase())
 				.uf(avro.getUf().toString().toUpperCase())
