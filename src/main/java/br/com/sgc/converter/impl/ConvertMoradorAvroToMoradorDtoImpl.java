@@ -16,10 +16,10 @@ public class ConvertMoradorAvroToMoradorDtoImpl implements ConvertAvroToObject<M
 		MoradorDto moradorDto = MoradorDto
 				.builder()
 				.id(avro.getId())
-				.nome(avro.getNome().toString())
+				.nome(avro.getNome().toString().toUpperCase())
 				.cpf(avro.getCpf().toString())
 				.rg(avro.getRg().toString())
-				.email(avro.getEmail().toString())
+				.email(avro.getEmail().toString().toLowerCase())
 				.perfil(avro.getPerfil() != null ? avro.getPerfil() : PerfilEnum.ROLE_USUARIO)
 				.associado(avro.getAssociado())
 				.telefone(avro.getTelefone().toString())

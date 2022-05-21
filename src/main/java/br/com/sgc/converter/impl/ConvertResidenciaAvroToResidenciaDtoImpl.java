@@ -14,13 +14,13 @@ public class ConvertResidenciaAvroToResidenciaDtoImpl implements ConvertAvroToOb
 		
 		ResidenciaDto moradorDto = ResidenciaDto
 				.builder()
-				.endereco(avro.getEndereco().toString())
+				.endereco(avro.getEndereco().toString().toUpperCase())
 				.numero(avro.getNumero())
-				.complemento(avro.getComplemento().toString())
-				.bairro(avro.getBairro().toString())
+				.complemento(avro.getComplemento().toString().toUpperCase())
+				.bairro(avro.getBairro().toString().toUpperCase())
 				.cep(avro.getCep().toString())
-				.cidade(avro.getCidade().toString())
-				.uf(avro.getUf().toString())
+				.cidade(avro.getCidade().toString().toUpperCase())
+				.uf(avro.getUf().toString().toUpperCase())
 				.guide(avro.getGuide().toString())
 				.ticketMorador(avro.getTicketMorador().toString())
 				.build();
