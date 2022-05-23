@@ -40,7 +40,7 @@ public class VinculoVeiculo implements Serializable {
     @JoinColumn(name = "visitante_id")
 	private Visitante visitante;
     
-    @Column(name = "data_vinculo", nullable = false)
+    @Column(name = "data_vinculo", nullable = true)
 	private Date      dataVinculo;
     
     @Column(name = "posicao", nullable = false)
