@@ -77,10 +77,10 @@ public class VisitaConsumerServiceImpl implements ConsumerService<VisitaDto> {
 			this.visitaRepository.save(visita);
 			
 			if(dto.getPlaca() != "") {
-				Optional<Veiculo> veiculo = veiculoRepository.findByPlaca(dto.getPlaca()); 
+				Optional<Veiculo> veiculo = veiculoRepository.findByPlaca(dto.getPlaca().replace("-", "")); 
 				Optional<Visitante> visitante = visitanteRepository.findByRg(dto.getRg());
 				
-				if(!veiculo.isPresent()) {
+				if(!veiculo.isPresent() && dto.getVeiculoVisita() != null) {
 					veiculo = Optional.of(this.veiculoMapper.visitaDtoToVeiculo(dto));
 					veiculo.get().setGuide(UUID.randomUUID().toString());
 					VinculoVeiculo vinculo = VinculoVeiculo
@@ -91,7 +91,7 @@ public class VisitaConsumerServiceImpl implements ConsumerService<VisitaDto> {
 					    .build();
 					this.vinculoVeiculoRepository.save(vinculo);
 				}else {
-					if(!this.vinculoVeiculoRepository.findByVisitanteIdAndVeiculoId(visitante.get().getId(), veiculo.get().getId()).isPresent()) {					
+					if(!this.vinculoVeiculoRepository.findByVisitanteIdAndVeiculoId(visitante.get().getId(), veiculo.get().getId()).isPresent() && veiculo.isPresent()) {					
 						VinculoVeiculo vinculo = VinculoVeiculo
 							.builder()
 							.guide(dto.getGuide())

@@ -68,7 +68,7 @@ public class ValidarCadastroVisita implements Validators<VisitaDto> {
 		}
 		
 		//Validação dos campos de marca e modelo do veiculo
-		if(t.getPlaca() != null && t.getPlaca() != "" && !veiculoRepository.findByPlaca(t.getPlaca()).isPresent()) {
+		if(t.getPlaca() != null && t.getPlaca() != "" && !veiculoRepository.findByPlaca(t.getPlaca()).isPresent() && t.getVeiculoVisita() != null) {
 				
 			if(t.getVeiculoVisita().getMarca().isEmpty()) {
 				errors.getErros().add(new ErroRegistro("", TITULO, " O campo Marca é obrigatório!"));	
