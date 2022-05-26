@@ -11,7 +11,6 @@ import br.com.sgc.dto.ResidenciaDto;
 import br.com.sgc.dto.ResponsePublisherDto;
 import br.com.sgc.entities.VinculoResidencia;
 import br.com.sgc.errorheadling.ErroRegistro;
-import br.com.sgc.errorheadling.RegistroException;
 import br.com.sgc.mapper.ResidenciaMapper;
 import br.com.sgc.repositories.MoradorRepository;
 import br.com.sgc.repositories.ResidenciaRepository;
@@ -39,7 +38,7 @@ public class ResidenciaConsumerServiceImpl implements ConsumerService<Residencia
 	private Validators<ResidenciaDto> validator;
 	
 	@Override
-	public void action(ResidenciaDto dto) throws RegistroException {
+	public void action(ResidenciaDto dto) throws Exception {
 		
 		log.info("Persistindo registro...");
 		

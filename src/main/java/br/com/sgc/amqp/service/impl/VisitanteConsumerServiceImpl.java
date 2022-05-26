@@ -10,7 +10,6 @@ import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.dto.ResponsePublisherDto;
 import br.com.sgc.dto.VisitanteDto;
 import br.com.sgc.errorheadling.ErroRegistro;
-import br.com.sgc.errorheadling.RegistroException;
 import br.com.sgc.mapper.VisitanteMapper;
 import br.com.sgc.repositories.VisitanteRepository;
 import br.com.sgc.validators.Validators;
@@ -30,7 +29,7 @@ public class VisitanteConsumerServiceImpl implements ConsumerService<VisitanteDt
 	private Validators<VisitanteDto> validator;
 	
 	@Override
-	public void action(VisitanteDto dto) throws RegistroException {
+	public void action(VisitanteDto dto) throws Exception {
 		
 		log.info("Persistindo registro...");
 		

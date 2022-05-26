@@ -16,7 +16,6 @@ import br.com.sgc.entities.VinculoVeiculo;
 import br.com.sgc.entities.Visita;
 import br.com.sgc.entities.Visitante;
 import br.com.sgc.errorheadling.ErroRegistro;
-import br.com.sgc.errorheadling.RegistroException;
 import br.com.sgc.mapper.VeiculoMapper;
 import br.com.sgc.mapper.VisitaMapper;
 import br.com.sgc.repositories.ResidenciaRepository;
@@ -56,7 +55,7 @@ public class VisitaConsumerServiceImpl implements ConsumerService<VisitaDto> {
 	private Validators<VisitaDto> validator;
 	
 	@Override
-	public void action(VisitaDto dto) throws RegistroException {
+	public void action(VisitaDto dto) throws Exception {
 		
 		log.info("Persistindo registro...");
 		

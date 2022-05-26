@@ -11,7 +11,6 @@ import br.com.sgc.dto.ResponsePublisherDto;
 import br.com.sgc.dto.VeiculoDto;
 import br.com.sgc.entities.Veiculo;
 import br.com.sgc.errorheadling.ErroRegistro;
-import br.com.sgc.errorheadling.RegistroException;
 import br.com.sgc.mapper.VeiculoMapper;
 import br.com.sgc.repositories.VeiculoRepository;
 import br.com.sgc.repositories.VinculoVeiculoRepository;
@@ -35,7 +34,7 @@ public class VeiculoConsumerServiceImpl implements ConsumerService<VeiculoDto> {
 	private Validators<VeiculoDto> validator;
 	
 	@Override
-	public void action(VeiculoDto dto) throws RegistroException {
+	public void action(VeiculoDto dto) throws Exception {
 		
 		log.info("Persistindo registro...");
 		

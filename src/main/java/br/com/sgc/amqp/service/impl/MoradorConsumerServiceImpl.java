@@ -7,13 +7,12 @@ import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.sgc.PerfilEnum;
 import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.dto.MoradorDto;
 import br.com.sgc.dto.ResponsePublisherDto;
 import br.com.sgc.entities.Morador;
-import br.com.sgc.PerfilEnum;
 import br.com.sgc.errorheadling.ErroRegistro;
-import br.com.sgc.errorheadling.RegistroException;
 import br.com.sgc.mapper.MoradorMapper;
 import br.com.sgc.repositories.MoradorRepository;
 import br.com.sgc.repositories.VinculoResidenciaRepository;
@@ -38,7 +37,7 @@ public class MoradorConsumerServiceImpl implements ConsumerService<MoradorDto> {
 	private Validators<MoradorDto> validator;
 	
 	@Override
-	public void action(MoradorDto dto) throws RegistroException {
+	public void action(MoradorDto dto) throws Exception {
 		
 		log.info("Persistindo registro...");
 		
