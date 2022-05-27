@@ -16,6 +16,7 @@ import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.errorheadling.RegistroException;
 import br.com.sgc.repositories.MoradorRepository;
 import br.com.sgc.repositories.ResidenciaRepository;
+import br.com.sgc.utils.PasswordUtils;
 import br.com.sgc.validators.Validators;
 
 @Component
@@ -51,6 +52,7 @@ public class ValidarCadastroMorador implements Validators<MoradorDto> {
 			if(morador.getId() == null || morador.getId() == 0) {
 				
 				morador.setGuide(UUID.randomUUID().toString());
+				morador.setSenha(PasswordUtils.gerarBCrypt(morador.getCpf().substring(0, 6)));
 				morador.setPerfil(morador.getPerfil() == null ? PerfilEnum.ROLE_USUARIO : PerfilEnum.ROLE_ADMIN);
 				morador.setResidenciaId(morador.getResidenciaId() == null ? 0 : morador.getResidenciaId());
 				
@@ -79,11 +81,10 @@ public class ValidarCadastroMorador implements Validators<MoradorDto> {
 				if(!moradorSource.isPresent()) {
 					errors.getErros().add(new ErroRegistro("", TITULO, " O morador informado não existe!"));
 					return errors.getErros();
-				}
+				}			
 				
 				
-				
-				if(morador.getNome() != moradorSource.get().getNome()) {
+				if(!morador.getNome().toUpperCase().equals(moradorSource.get().getNome())) {
 					if(this.moradorRepository.findByNome(morador.getNome()).isPresent())
 						errors.getErros().add(new ErroRegistro("", TITULO, " O novo nome (" + morador.getNome() + ") informado já existe!"));
 				}
@@ -91,6 +92,9 @@ public class ValidarCadastroMorador implements Validators<MoradorDto> {
 				morador.setCpf(moradorSource.get().getCpf());
 				morador.setPerfil(moradorSource.get().getPerfil());
 				morador.setGuide(moradorSource.get().getGuide());
+				morador.setSenha(moradorSource.get().getSenha());
+				morador.setResidenciaId(morador.getResidenciaId() == null ? 0 : morador.getResidenciaId());
+				morador.setDataCriacao(moradorSource.get().getDataCriacao());
 				
 			}
 		}
@@ -124,7 +128,7 @@ public class ValidarCadastroMorador implements Validators<MoradorDto> {
 		});
 		
 		t.forEach(morador -> {
-			if(morador.getResidenciaId() != 0) {
+			if(morador.getResidenciaId() != 0 && morador.getResidenciaId() != null) {
 				if (!this.residenciaRepository.findById(morador.getResidenciaId()).isPresent())
 					errors.getErros().add(new ErroRegistro("", TITULO, " A residencia de código '" + morador.getResidenciaId() + "' não existe"));				
 			}
