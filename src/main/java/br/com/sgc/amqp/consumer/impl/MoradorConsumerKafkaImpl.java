@@ -28,13 +28,10 @@ public class MoradorConsumerKafkaImpl implements AmqpConsumer<MoradorAvro> {
 	public void consumer(ConsumerRecord<String, MoradorAvro> message, Acknowledgment ack) {
 		
 		log.info("Recebida a mensagem, enviando para o serviço...");
-
-		MoradorDto moradorDto = this.converter.convert(message.value());
 		
 		try {
-			this.consumerService.action(moradorDto);
+			this.consumerService.action(this.converter.convert(message.value()));
 		} catch (Exception ex) {
-			ack.acknowledge();
 			throw new AmqpRejectAndDontRequeueException(ex);
 		}
 		
