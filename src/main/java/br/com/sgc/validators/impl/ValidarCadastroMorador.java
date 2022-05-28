@@ -3,15 +3,14 @@ package br.com.sgc.validators.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.sgc.PerfilEnum;
 import br.com.sgc.commons.ValidaCPF;
 import br.com.sgc.dto.MoradorDto;
 import br.com.sgc.entities.Morador;
-import br.com.sgc.PerfilEnum;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.errorheadling.RegistroException;
 import br.com.sgc.repositories.MoradorRepository;
@@ -51,7 +50,6 @@ public class ValidarCadastroMorador implements Validators<MoradorDto> {
 			
 			if(morador.getId() == null || morador.getId() == 0) {
 				
-				morador.setGuide(UUID.randomUUID().toString());
 				morador.setSenha(PasswordUtils.gerarBCrypt(morador.getCpf().substring(0, 6)));
 				morador.setPerfil(morador.getPerfil() == null ? PerfilEnum.ROLE_USUARIO : morador.getPerfil());
 				morador.setResidenciaId(morador.getResidenciaId() == null ? 0 : morador.getResidenciaId());
