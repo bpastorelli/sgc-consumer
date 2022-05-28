@@ -49,7 +49,7 @@ public class MoradorConsumerServiceImpl implements ConsumerService<MoradorDto> {
 		}else {
 			if(dto.getResidenciaId() != 0L && dto.getId() == null) {
 				log.info("Registrando com vinculo de residência...");
-				vinculoResidenciaRepository.save(this.moradorMapper.moradorDtoToVinculoResidencia(this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto))));				
+				vinculoResidenciaRepository.save(this.moradorMapper.moradorToVinculoResidencia(this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto))));				
 			}else {
 				log.info("Registrando sem vinculo de residência...");
 				this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto));
