@@ -26,6 +26,7 @@ public class ConvertMoradorAvroToMoradorDtoImpl implements ConvertAvroToObject<M
 				.celular(avro.getCelular().toString())
 				.residenciaId(avro.getResidenciaId())
 				.guide(avro.getGuide().toString())
+				.posicao(avro.getPosicao())
 				.build();
 		
 		return moradorDto;

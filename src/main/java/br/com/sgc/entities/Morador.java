@@ -66,11 +66,11 @@ public class Morador implements Serializable {
 	private PerfilEnum perfil;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DATA_CRIACAO", nullable = false)
+	@Column(name = "DATA_CRIACAO", nullable = true)
 	private Date dataCriacao;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DATA_ATUALIZACAO", nullable = false)
+	@Column(name = "DATA_ATUALIZACAO", nullable = true)
 	private Date dataAtualizacao;
 	
 	@Transient

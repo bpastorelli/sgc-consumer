@@ -16,7 +16,6 @@ import br.com.sgc.entities.VinculoVeiculo;
 import br.com.sgc.entities.Visita;
 import br.com.sgc.entities.Visitante;
 import br.com.sgc.errorheadling.ErroRegistro;
-import br.com.sgc.errorheadling.RegistroException;
 import br.com.sgc.mapper.VeiculoMapper;
 import br.com.sgc.mapper.VisitaMapper;
 import br.com.sgc.repositories.ResidenciaRepository;
@@ -56,7 +55,7 @@ public class VisitaConsumerServiceImpl implements ConsumerService<VisitaDto> {
 	private Validators<VisitaDto> validator;
 	
 	@Override
-	public void action(VisitaDto dto) throws RegistroException {
+	public void action(VisitaDto dto) throws Exception {
 		
 		log.info("Persistindo registro...");
 		
@@ -77,10 +76,10 @@ public class VisitaConsumerServiceImpl implements ConsumerService<VisitaDto> {
 			this.visitaRepository.save(visita);
 			
 			if(dto.getPlaca() != "") {
-				Optional<Veiculo> veiculo = veiculoRepository.findByPlaca(dto.getPlaca()); 
+				Optional<Veiculo> veiculo = veiculoRepository.findByPlaca(dto.getPlaca().replace("-", "")); 
 				Optional<Visitante> visitante = visitanteRepository.findByRg(dto.getRg());
 				
-				if(!veiculo.isPresent()) {
+				if(!veiculo.isPresent() && dto.getVeiculoVisita() != null) {
 					veiculo = Optional.of(this.veiculoMapper.visitaDtoToVeiculo(dto));
 					veiculo.get().setGuide(UUID.randomUUID().toString());
 					VinculoVeiculo vinculo = VinculoVeiculo
@@ -91,7 +90,7 @@ public class VisitaConsumerServiceImpl implements ConsumerService<VisitaDto> {
 					    .build();
 					this.vinculoVeiculoRepository.save(vinculo);
 				}else {
-					if(!this.vinculoVeiculoRepository.findByVisitanteIdAndVeiculoId(visitante.get().getId(), veiculo.get().getId()).isPresent()) {					
+					if(!this.vinculoVeiculoRepository.findByVisitanteIdAndVeiculoId(visitante.get().getId(), veiculo.get().getId()).isPresent() && veiculo.isPresent()) {					
 						VinculoVeiculo vinculo = VinculoVeiculo
 							.builder()
 							.guide(dto.getGuide())
