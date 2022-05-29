@@ -17,7 +17,6 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import br.com.sgc.PerfilEnum;
 import lombok.AllArgsConstructor;
@@ -75,14 +74,14 @@ public class Morador implements Serializable {
 	@Column(name = "DATA_ATUALIZACAO", nullable = true)
 	private Date dataAtualizacao;
 	
-	@Transient
-	private Long residenciaId;
-	
 	@Column(name = "ASSOCIADO", nullable = false)
 	private Long associado;
 	
 	@Column(name = "POSICAO", nullable = false)
 	private Long posicao;
+	
+	//@OneToOne(mappedBy="morador", cascade=CascadeType.PERSIST)
+	//private Residencia residencia;
 	
 	@OneToOne(mappedBy = "morador", cascade = CascadeType.ALL)
 	private VinculoResidencia vinculoResidencia;

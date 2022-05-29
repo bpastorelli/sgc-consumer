@@ -55,7 +55,7 @@ public class ResidenciaConsumerServiceImpl implements ConsumerService<Residencia
 			if(dto.getGuide() != null) {
 				VinculoResidencia vinculo = VinculoResidencia
 						.builder()
-						.residencia(this.residenciaRepository.save(this.residenciaMapper.residenciaDtoToResidencia(dto)))
+						.residenciaId(dto.getId())
 						.morador(moradorRepository.findByGuide(dto.getTicketMorador()).get())
 						.guide(dto.getGuide())
 						.build();

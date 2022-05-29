@@ -47,6 +47,7 @@ public class ValidarCadastroMorador implements Validators<MoradorDto> {
 				
 				morador.setSenha(PasswordUtils.gerarBCrypt(morador.getCpf().substring(0, 6)));
 				morador.setPerfil(morador.getPerfil() == null ? PerfilEnum.ROLE_USUARIO : morador.getPerfil());
+				morador.setAssociado(morador.getAssociado() == null ? 0 : morador.getAssociado());
 				morador.setResidenciaId(morador.getResidenciaId() == null ? 0 : morador.getResidenciaId());
 			
 			}else {
