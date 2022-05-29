@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -39,7 +39,7 @@ public class VinculoResidencia implements Serializable {
 	@Column(name = "data_vinculo", nullable = false)
 	private Date dataVinculo;
 	
-	@OneToOne @MapsId
+	@ManyToOne @MapsId
 	private Morador morador;
     
     //@ManyToOne(fetch = FetchType.EAGER)
