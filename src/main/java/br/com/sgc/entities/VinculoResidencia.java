@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,11 +40,8 @@ public class VinculoResidencia implements Serializable {
 	@Column(name = "data_vinculo", nullable = false)
 	private Date dataVinculo;
 	
-	@ManyToOne @MapsId
+	@ManyToOne(fetch = FetchType.LAZY) @MapsId
 	private Morador morador;
-    
-    //@ManyToOne(fetch = FetchType.EAGER)
-	//private Residencia residencia;
 	
 	@Column(name = "residencia_id", nullable = true)
 	private Long residenciaId;
