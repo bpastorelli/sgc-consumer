@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.dto.MoradorDto;
 import br.com.sgc.dto.ResponsePublisherDto;
-import br.com.sgc.entities.VinculoResidencia;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.mapper.MoradorMapper;
 import br.com.sgc.repositories.MoradorRepository;
@@ -50,8 +49,7 @@ public class MoradorConsumerServiceImpl implements ConsumerService<MoradorDto> {
 		}else {
 			if(dto.getResidenciaId() != 0L && dto.getId() == null) {
 				log.info("Registrando com vinculo de residência...");
-				VinculoResidencia res = this.moradorMapper.moradorDtoToVinculoResidencia(dto);
-				this.vinculoResidenciaRepository.save(res);				
+				this.vinculoResidenciaRepository.save(this.moradorMapper.moradorDtoToVinculoResidencia(dto));				
 			}else {
 				log.info("Registrando sem vinculo de residência...");
 				this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto));
