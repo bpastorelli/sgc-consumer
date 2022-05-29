@@ -68,9 +68,6 @@ public class Residencia implements Serializable {
 	@OneToMany(mappedBy = "residenciaId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Lancamento> lancamentos;
 	
-	//@OneToMany(mappedBy = "residencia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	//private List<VinculoResidencia> vinculosResidencia;
-	
 	@PreUpdate
     public void preUpdate() {
         dataAtualizacao = new Date();

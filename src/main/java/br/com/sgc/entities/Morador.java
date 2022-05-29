@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -81,7 +82,7 @@ public class Morador implements Serializable {
 	@Column(name = "POSICAO", nullable = false)
 	private Long posicao;
 	
-	@OneToMany(mappedBy = "morador", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "morador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<VinculoResidencia> vinculosResidencia;
 	
 	@PreUpdate
