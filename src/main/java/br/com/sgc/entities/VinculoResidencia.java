@@ -43,8 +43,8 @@ public class VinculoResidencia implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY) @MapsId
 	private Morador morador;
 	
-	@Column(name = "residencia_id", nullable = true)
-	private Long residenciaId;
+	@ManyToOne
+	private Residencia residencia;
 	
 	@PreUpdate
     public void preUpdate() {

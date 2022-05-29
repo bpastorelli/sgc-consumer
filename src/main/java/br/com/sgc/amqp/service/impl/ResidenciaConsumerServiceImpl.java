@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.dto.ResidenciaDto;
 import br.com.sgc.dto.ResponsePublisherDto;
+import br.com.sgc.entities.Residencia;
 import br.com.sgc.entities.VinculoResidencia;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.mapper.ResidenciaMapper;
@@ -55,7 +56,7 @@ public class ResidenciaConsumerServiceImpl implements ConsumerService<Residencia
 			if(dto.getGuide() != null) {
 				VinculoResidencia vinculo = VinculoResidencia
 						.builder()
-						.residenciaId(dto.getId())
+						.residencia(Residencia.builder().id(dto.getId()).build())
 						.morador(moradorRepository.findByGuide(dto.getTicketMorador()).get())
 						.guide(dto.getGuide())
 						.build();

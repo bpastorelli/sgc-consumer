@@ -24,7 +24,6 @@ public abstract class MoradorMapper {
 	
 	public abstract MoradorAvro moradorDtoToMoradorAvro(MoradorDto dto);
 	
-	@Mapping(target = "residenciaId", source = "dto.residenciaId")
 	@Mapping(target = "morador.id", source = "dto.id")
 	@Mapping(target = "morador.nome", source = "dto.nome")
 	@Mapping(target = "morador.cpf", source = "dto.cpf")
@@ -38,6 +37,7 @@ public abstract class MoradorMapper {
 	@Mapping(target = "morador.associado", source = "dto.associado")
 	@Mapping(target = "morador.posicao", source = "dto.posicao")
 	@Mapping(target = "morador.dataCriacao", source = "dto.dataCriacao")
+	@Mapping(target = "residencia.id", source = "dto.residenciaId")
 	public abstract VinculoResidencia moradorDtoToVinculoResidencia(MoradorDto dto);
 
 }
