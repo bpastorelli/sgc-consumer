@@ -13,6 +13,7 @@ import br.com.sgc.entities.VinculoResidencia;
 @Mapper(componentModel = "spring")
 public abstract class MoradorMapper {
 	
+
 	public abstract Morador moradorDtoToMorador(MoradorDto dto);
 	
 	public abstract MoradorDto moradorToMoradorDto(Morador morador);
@@ -23,9 +24,20 @@ public abstract class MoradorMapper {
 	
 	public abstract MoradorAvro moradorDtoToMoradorAvro(MoradorDto dto);
 	
-	@Mapping(target = "morador.guide", source = "dto.guide")
 	@Mapping(target = "morador.id", source = "dto.id")
+	@Mapping(target = "morador.nome", source = "dto.nome")
+	@Mapping(target = "morador.cpf", source = "dto.cpf")
+	@Mapping(target = "morador.rg", source = "dto.rg")
+	@Mapping(target = "morador.email", source = "dto.email")
+	@Mapping(target = "morador.telefone", source = "dto.telefone")
+	@Mapping(target = "morador.celular", source = "dto.celular")
+	@Mapping(target = "morador.guide", source = "dto.guide")
+	@Mapping(target = "morador.senha", source = "dto.senha")
+	@Mapping(target = "morador.perfil", source = "dto.perfil")
+	@Mapping(target = "morador.associado", source = "dto.associado")
+	@Mapping(target = "morador.posicao", source = "dto.posicao")
+	@Mapping(target = "morador.dataCriacao", source = "dto.dataCriacao")
 	@Mapping(target = "residencia.id", source = "dto.residenciaId")
-	public abstract VinculoResidencia moradorDtoToVinculoResidencia(Morador dto);
+	public abstract VinculoResidencia moradorDtoToVinculoResidencia(MoradorDto dto);
 
 }
