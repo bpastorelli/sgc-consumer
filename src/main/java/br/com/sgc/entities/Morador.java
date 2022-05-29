@@ -2,6 +2,7 @@ package br.com.sgc.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -80,11 +81,8 @@ public class Morador implements Serializable {
 	@Column(name = "POSICAO", nullable = false)
 	private Long posicao;
 	
-	//@OneToOne(mappedBy="morador", cascade=CascadeType.PERSIST)
-	//private Residencia residencia;
-	
-	@OneToOne(mappedBy = "morador", cascade = CascadeType.ALL)
-	private VinculoResidencia vinculoResidencia;
+	@OneToMany(mappedBy = "morador", cascade = CascadeType.ALL)
+	private List<VinculoResidencia> vinculosResidencia;
 	
 	@PreUpdate
     public void preUpdate() {
