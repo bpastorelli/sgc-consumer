@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Transient;
 
 import br.com.sgc.PerfilEnum;
+import br.com.sgc.entities.Residencia;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -48,5 +49,8 @@ public class MoradorDto implements Serializable {
 	
 	@Transient
 	private Date dataCriacao;
+	
+	@Transient
+	private Residencia residencia;
 
 }

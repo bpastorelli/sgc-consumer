@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.dto.ResidenciaDto;
 import br.com.sgc.dto.ResponsePublisherDto;
-import br.com.sgc.entities.Residencia;
 import br.com.sgc.entities.VinculoResidencia;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.mapper.ResidenciaMapper;
@@ -53,10 +52,9 @@ public class ResidenciaConsumerServiceImpl implements ConsumerService<Residencia
 		}else {
 			if(dto.getGuide() != null) {
 				log.info("Registrando com morador vinculado...");
-				Residencia residencia = this.residenciaRepository.save(this.residenciaMapper.residenciaDtoToResidencia(dto));
 				VinculoResidencia vinculo = VinculoResidencia.builder()
 						.morador(dto.getMorador())
-						.residencia(residencia)
+						.residencia(this.residenciaRepository.save(this.residenciaMapper.residenciaDtoToResidencia(dto)))
 						.guide(dto.getGuide())
 						.build();	
 				vinculoResidenciaRepository.save(vinculo);									

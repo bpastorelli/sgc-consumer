@@ -13,6 +13,7 @@ import br.com.sgc.entities.Morador;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.errorheadling.RegistroException;
 import br.com.sgc.repositories.MoradorRepository;
+import br.com.sgc.repositories.ResidenciaRepository;
 import br.com.sgc.utils.PasswordUtils;
 import br.com.sgc.validators.Validators;
 
@@ -21,6 +22,9 @@ public class ValidarCadastroMorador implements Validators<MoradorDto> {
 	
 	@Autowired
 	private MoradorRepository moradorRepository;
+	
+	@Autowired
+	private ResidenciaRepository residenciaRepository;
 	
 	private static final String TITULO = "Cadastro de morador recusado!";
 	
@@ -49,6 +53,9 @@ public class ValidarCadastroMorador implements Validators<MoradorDto> {
 				morador.setPerfil(morador.getPerfil() == null ? PerfilEnum.ROLE_USUARIO : morador.getPerfil());
 				morador.setAssociado(morador.getAssociado() == null ? 0 : morador.getAssociado());
 				morador.setResidenciaId(morador.getResidenciaId() == null ? 0 : morador.getResidenciaId());
+				
+				if(morador.getResidenciaId() != null && morador.getResidenciaId() != 0)
+					morador.setResidencia(residenciaRepository.findById(morador.getResidenciaId()).get());
 			
 			}else {
 				
