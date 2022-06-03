@@ -14,6 +14,7 @@ public class ConvertResidenciaAvroToResidenciaDtoImpl implements ConvertAvroToOb
 		
 		ResidenciaDto moradorDto = ResidenciaDto
 				.builder()
+				.id(avro.getId())
 				.endereco(avro.getEndereco().toString().toUpperCase())
 				.numero(avro.getNumero())
 				.complemento(avro.getComplemento().toString().toUpperCase())

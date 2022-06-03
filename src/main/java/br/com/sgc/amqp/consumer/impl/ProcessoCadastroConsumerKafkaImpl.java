@@ -7,25 +7,25 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
-import br.com.sgc.ResidenciaAvro;
+import br.com.sgc.ProcessoCadastroAvro;
 import br.com.sgc.amqp.consumer.AmqpConsumer;
 import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.converter.ConvertAvroToObject;
-import br.com.sgc.dto.ResidenciaDto;
+import br.com.sgc.dto.ProcessoCadastroDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class ResidenciaConsumerKafkaImpl implements AmqpConsumer<ResidenciaAvro> {
+public class ProcessoCadastroConsumerKafkaImpl implements AmqpConsumer<ProcessoCadastroAvro> {
 	
 	@Autowired
-	private ConsumerService<ResidenciaDto> consumerService;
+	private ConsumerService<ProcessoCadastroDto> consumerService;
 	
 	@Autowired
-	private ConvertAvroToObject<ResidenciaDto, ResidenciaAvro> converter;
+	private ConvertAvroToObject<ProcessoCadastroDto, ProcessoCadastroAvro> converter;
 	
-	@KafkaListener(topics = "${residencia.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
-	public void consumer(ConsumerRecord<String, ResidenciaAvro> message, Acknowledgment ack) {
+	@KafkaListener(topics = "${processo.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
+	public void consumer(ConsumerRecord<String, ProcessoCadastroAvro> message, Acknowledgment ack) {
 		
 		log.info("Recebida a mensagem, enviando para o serviço...");
 		

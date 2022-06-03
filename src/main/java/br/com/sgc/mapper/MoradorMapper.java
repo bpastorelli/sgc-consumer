@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 
 import br.com.sgc.MoradorAvro;
 import br.com.sgc.dto.MoradorDto;
+import br.com.sgc.dto.ProcessoCadastroDto;
 import br.com.sgc.entities.Morador;
 import br.com.sgc.entities.VinculoResidencia;
 
@@ -39,5 +40,7 @@ public abstract class MoradorMapper {
 	@Mapping(target = "morador.dataCriacao", source = "dto.dataCriacao")
 	@Mapping(target = "residencia.id", source = "dto.residenciaId")
 	public abstract VinculoResidencia moradorDtoToVinculoResidencia(MoradorDto dto);
+	
+	public abstract VinculoResidencia processoCadastroDtoToVinculoResidencia(ProcessoCadastroDto dto);
 
 }

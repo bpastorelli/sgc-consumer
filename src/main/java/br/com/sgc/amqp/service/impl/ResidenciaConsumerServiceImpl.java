@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.dto.ResidenciaDto;
@@ -13,7 +14,6 @@ import br.com.sgc.entities.Residencia;
 import br.com.sgc.entities.VinculoResidencia;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.mapper.ResidenciaMapper;
-import br.com.sgc.repositories.MoradorRepository;
 import br.com.sgc.repositories.ResidenciaRepository;
 import br.com.sgc.repositories.VinculoResidenciaRepository;
 import br.com.sgc.validators.Validators;
@@ -30,15 +30,13 @@ public class ResidenciaConsumerServiceImpl implements ConsumerService<Residencia
 	private ResidenciaRepository residenciaRepository; 
 	
 	@Autowired
-	private MoradorRepository moradorRepository;
-	
-	@Autowired
 	private VinculoResidenciaRepository vinculoResidenciaRepository;
 	
 	@Autowired
 	private Validators<ResidenciaDto> validator;
 	
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void action(ResidenciaDto dto) throws Exception {
 		
 		log.info("Persistindo registro...");
@@ -54,14 +52,16 @@ public class ResidenciaConsumerServiceImpl implements ConsumerService<Residencia
 			});			
 		}else {
 			if(dto.getGuide() != null) {
-				VinculoResidencia vinculo = VinculoResidencia
-						.builder()
-						.residencia(Residencia.builder().id(dto.getId()).build())
-						.morador(moradorRepository.findByGuide(dto.getTicketMorador()).get())
+				log.info("Registrando com morador vinculado...");
+				Residencia residencia = this.residenciaRepository.save(this.residenciaMapper.residenciaDtoToResidencia(dto));
+				VinculoResidencia vinculo = VinculoResidencia.builder()
+						.morador(dto.getMorador())
+						.residencia(residencia)
 						.guide(dto.getGuide())
-						.build();
-				vinculoResidenciaRepository.save(vinculo);				
+						.build();	
+				vinculoResidenciaRepository.save(vinculo);									
 			}else {
+				log.info("Registrando sem morador vinculado...");
 				this.residenciaRepository.save(this.residenciaMapper.residenciaDtoToResidencia(dto));
 			}
 		}	

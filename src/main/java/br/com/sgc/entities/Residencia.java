@@ -4,10 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,10 +30,8 @@ public class Residencia implements Serializable {
 
 	private static final long serialVersionUID = 3960436649365666213L;
 	
-	@Column(name = "guide", nullable = false)
-	private String guide;
-	
 	@Id
+	@Basic(optional=false)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long   id;
 	
@@ -65,8 +62,11 @@ public class Residencia implements Serializable {
 	@Column(name = "data_atualizacao", nullable = false)
 	private Date   dataAtualizacao;
 	
-	@OneToMany(mappedBy = "residenciaId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Lancamento> lancamentos;
+	@Column(name = "guide", nullable = false)
+	private String guide;
+	
+	@OneToMany(mappedBy = "residencia")
+	private List<VinculoResidencia> vinculoResidencia;
 	
 	@PreUpdate
     public void preUpdate() {

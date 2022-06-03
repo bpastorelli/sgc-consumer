@@ -11,6 +11,7 @@ import br.com.sgc.dto.ResidenciaDto;
 import br.com.sgc.entities.Residencia;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.errorheadling.RegistroException;
+import br.com.sgc.repositories.MoradorRepository;
 import br.com.sgc.repositories.ResidenciaRepository;
 import br.com.sgc.validators.Validators;
 
@@ -19,6 +20,9 @@ public class ValidarCadastroResidencia implements Validators<ResidenciaDto> {
 	
 	@Autowired
 	private ResidenciaRepository residenciaRepository;
+	
+	@Autowired
+	private MoradorRepository moradorRepository;
 	
 	@Override
 	public List<ErroRegistro> validar(ResidenciaDto t) throws RegistroException {
@@ -34,17 +38,21 @@ public class ValidarCadastroResidencia implements Validators<ResidenciaDto> {
 		
 		RegistroException errors = new RegistroException();
 
-		t.forEach(r -> {
+		for(ResidenciaDto residencia : t) {
 			
-			if(r.getId() != null || r.getId() != 0) {
+			if(residencia.getId() != null && residencia.getId() != 0) {
 				
-				Optional<Residencia> residenciaSource = this.residenciaRepository.findById(r.getId());
+				Optional<Residencia> residenciaSource = this.residenciaRepository.findById(residencia.getId());
 				
-				r.setId(residenciaSource.get().getId());
-				r.setGuide(residenciaSource.get().getGuide());
+				residencia.setId(residenciaSource.get().getId());
+				residencia.setGuide(residenciaSource.get().getGuide());
+			}else {
+				
+				if(residencia.getTicketMorador() != null)
+					residencia.setMorador(moradorRepository.findByGuide(residencia.getTicketMorador()).get());
 			}
 			
-		});
+		};
 		
 		return errors.getErros();
 		
