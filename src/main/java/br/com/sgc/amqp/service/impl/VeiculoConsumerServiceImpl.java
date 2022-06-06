@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.dto.ResponsePublisherDto;
@@ -34,6 +35,7 @@ public class VeiculoConsumerServiceImpl implements ConsumerService<VeiculoDto> {
 	private Validators<VeiculoDto> validator;
 	
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void action(VeiculoDto dto) throws Exception {
 		
 		log.info("Persistindo registro...");
