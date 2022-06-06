@@ -32,7 +32,6 @@ public class VisitanteConsumerKafkaImpl implements AmqpConsumer<VisitanteAvro> {
 		try {
 			this.consumerService.action(this.converter.convert(message.value()));
 		} catch (Exception ex) {
-			ack.acknowledge();
 			throw new AmqpRejectAndDontRequeueException(ex);
 		};
 		

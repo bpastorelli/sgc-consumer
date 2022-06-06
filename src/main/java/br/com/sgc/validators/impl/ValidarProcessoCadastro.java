@@ -9,9 +9,12 @@ import org.springframework.stereotype.Component;
 import br.com.sgc.PerfilEnum;
 import br.com.sgc.dto.ProcessoCadastroDto;
 import br.com.sgc.entities.Morador;
+import br.com.sgc.entities.Residencia;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.errorheadling.RegistroException;
+import br.com.sgc.mapper.ResidenciaMapper;
 import br.com.sgc.repositories.MoradorRepository;
+import br.com.sgc.repositories.ResidenciaRepository;
 import br.com.sgc.utils.PasswordUtils;
 import br.com.sgc.validators.Validators;
 
@@ -20,6 +23,12 @@ public class ValidarProcessoCadastro implements Validators<ProcessoCadastroDto> 
 	
 	@Autowired
 	private MoradorRepository moradorRepository;
+	
+	@Autowired
+	private ResidenciaRepository residenciaRepsository;
+	
+	@Autowired
+	private ResidenciaMapper residenciaMapper;
 	
 	@Override	
 	public List<ErroRegistro> validar(ProcessoCadastroDto t) throws RegistroException {
@@ -32,7 +41,11 @@ public class ValidarProcessoCadastro implements Validators<ProcessoCadastroDto> 
 				t.getMorador().setSenha(PasswordUtils.gerarBCrypt(t.getMorador().getCpf().substring(0, 6)));
 				t.getMorador().setPerfil(t.getMorador().getPerfil() == null ? PerfilEnum.ROLE_USUARIO : t.getMorador().getPerfil());
 				t.getMorador().setAssociado(t.getMorador().getAssociado() == null ? 0 : t.getMorador().getAssociado());
-			
+				
+				Optional<Residencia> residencia = residenciaRepsository.findByCepAndNumero(t.getResidencia().getCep(), t.getResidencia().getNumero());
+				if(residencia.isPresent())
+					t.setResidencia(this.residenciaMapper.residenciaToResidenciaDto(residencia.get()));
+
 			}else {
 				
 				Optional<Morador> moradorSource = this.moradorRepository.findById(t.getMorador().getId());

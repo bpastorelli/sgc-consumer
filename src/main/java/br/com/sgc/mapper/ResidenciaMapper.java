@@ -12,6 +12,8 @@ public abstract class ResidenciaMapper {
 	
 	public abstract Residencia residenciaDtoToResidencia(ResidenciaDto dto);
 	
+	public abstract ResidenciaDto residenciaToResidenciaDto(Residencia residencia);
+	
 	public abstract VinculoResidencia residenciaToVinculoResidencia(Residencia entity);
 	
 	@Mapping(target = "residencia.id", source = "dto.id")
