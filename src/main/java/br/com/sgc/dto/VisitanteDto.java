@@ -1,5 +1,7 @@
 package br.com.sgc.dto;
 
+import java.util.Date;
+
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
@@ -15,6 +17,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VisitanteDto {
+	
+	private Long id;
 	
 	@NotNull(message = "Campo nome é obrigatório")
 	private String nome;
@@ -47,6 +51,11 @@ public class VisitanteDto {
 	private String telefone;
 	
 	private String celular;
+	
+	@Transient
+	private Date dataCriacao;
+	
+	private Long posicao;
 	
 	@Transient
 	private String guide;

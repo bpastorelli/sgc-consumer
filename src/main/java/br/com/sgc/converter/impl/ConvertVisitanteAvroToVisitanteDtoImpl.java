@@ -14,6 +14,7 @@ public class ConvertVisitanteAvroToVisitanteDtoImpl implements ConvertAvroToObje
 		
 		VisitanteDto visitanteDto = VisitanteDto
 				.builder()
+				.id(avro.getId())
 				.nome(avro.getNome().toString().toUpperCase())
 				.cpf(avro.getCpf().toString())
 				.rg(avro.getRg().toString())
@@ -27,6 +28,7 @@ public class ConvertVisitanteAvroToVisitanteDtoImpl implements ConvertAvroToObje
 				.telefone(avro.getTelefone().toString())
 				.celular(avro.getCelular().toString())
 				.guide(avro.getGuide().toString())
+				.posicao(avro.getPosicao())
 				.build();
 		
 		return visitanteDto;

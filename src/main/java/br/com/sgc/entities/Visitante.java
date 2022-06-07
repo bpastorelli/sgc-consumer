@@ -28,9 +28,6 @@ public class Visitante implements Serializable {
 	
 	private static final long serialVersionUID = -5754246207015712519L;
 	
-	@Column(name = "guide", nullable = true)
-	private String guide;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long   id;
@@ -84,6 +81,9 @@ public class Visitante implements Serializable {
 	
 	@Column(name = "posicao", nullable = false)
 	private Long   posicao;
+	
+	@Column(name = "guide", nullable = true)
+	private String guide;
 	
 	@PreUpdate
 	public void preUpdate() {
