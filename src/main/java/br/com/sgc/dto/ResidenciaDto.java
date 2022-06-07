@@ -1,5 +1,7 @@
 package br.com.sgc.dto;
 
+import java.util.Date;
+
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
@@ -41,6 +43,9 @@ public class ResidenciaDto {
 	
 	@Transient
 	private Morador morador;
+	
+	@Transient
+	private Date dataCriacao;
 	
 	private String guide;
 	

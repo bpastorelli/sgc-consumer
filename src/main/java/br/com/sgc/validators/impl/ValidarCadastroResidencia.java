@@ -40,12 +40,13 @@ public class ValidarCadastroResidencia implements Validators<ResidenciaDto> {
 
 		for(ResidenciaDto residencia : t) {
 			
-			if(residencia.getId() != null && residencia.getId() != 0) {
+			if(residencia.getId() != null) {
 				
 				Optional<Residencia> residenciaSource = this.residenciaRepository.findById(residencia.getId());
 				
 				residencia.setId(residenciaSource.get().getId());
 				residencia.setGuide(residenciaSource.get().getGuide());
+				residencia.setDataCriacao(residenciaSource.get().getDataCriacao());
 			}else {
 				
 				if(residencia.getTicketMorador() != null)

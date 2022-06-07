@@ -23,7 +23,7 @@ public class ConvertResidenciaAvroToResidenciaDtoImpl implements ConvertAvroToOb
 				.cidade(avro.getCidade().toString().toUpperCase())
 				.uf(avro.getUf().toString().toUpperCase())
 				.guide(avro.getGuide().toString())
-				.ticketMorador(avro.getTicketMorador().toString())
+				.ticketMorador(avro.getTicketMorador() == null ? null : avro.getTicketMorador().toString())
 				.build();
 		
 		return moradorDto;

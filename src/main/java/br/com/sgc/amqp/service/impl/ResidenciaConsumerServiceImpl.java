@@ -50,7 +50,7 @@ public class ResidenciaConsumerServiceImpl implements ConsumerService<Residencia
 				throw new AmqpRejectAndDontRequeueException(erro.getDetalhe()); 
 			});			
 		}else {
-			if(dto.getGuide() != null) {
+			if(dto.getGuide() != null && dto.getId().equals(null)) {
 				log.info("Registrando com morador vinculado...");
 				VinculoResidencia vinculo = VinculoResidencia.builder()
 						.morador(dto.getMorador())
