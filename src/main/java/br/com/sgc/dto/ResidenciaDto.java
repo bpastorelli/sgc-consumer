@@ -1,17 +1,19 @@
 package br.com.sgc.dto;
 
+import java.util.Date;
+
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import br.com.sgc.entities.Morador;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
 public class ResidenciaDto {
-	
-	private String guide;
 	
 	private Long   id;
 	
@@ -38,6 +40,14 @@ public class ResidenciaDto {
 	@NotNull(message = "UF não pode ser nulo.")
 	@Length(min = 2, max = 2, message = "Campo UF deve conter 2 caracteres.")
 	private String uf;
+	
+	@Transient
+	private Morador morador;
+	
+	@Transient
+	private Date dataCriacao;
+	
+	private String guide;
 	
 	private transient String ticketMorador;
 

@@ -3,14 +3,13 @@ package br.com.sgc.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -40,10 +39,10 @@ public class VinculoResidencia implements Serializable {
 	@Column(name = "data_vinculo", nullable = false)
 	private Date dataVinculo;
 	
-	@ManyToOne(fetch = FetchType.LAZY) @MapsId
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Morador morador;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Residencia residencia;
 	
 	@PreUpdate

@@ -32,7 +32,6 @@ public class ResidenciaConsumerKafkaImpl implements AmqpConsumer<ResidenciaAvro>
 		try {
 			this.consumerService.action(this.converter.convert(message.value()));
 		} catch (Exception ex) {
-			ack.acknowledge();
 			throw new AmqpRejectAndDontRequeueException(ex);
 		}
 		

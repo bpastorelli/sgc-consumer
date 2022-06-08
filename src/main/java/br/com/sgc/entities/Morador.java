@@ -4,12 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,11 +34,9 @@ public class Morador implements Serializable {
 
 	private static final long serialVersionUID = -5754246207015712518L;
 	
-	@Column(name = "GUIDE", nullable = true)
-	private String guide;
-	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "ID")
 	private Long id;
 	
 	@Column(name = "NOME", nullable = false)
@@ -82,8 +78,11 @@ public class Morador implements Serializable {
 	@Column(name = "POSICAO", nullable = false)
 	private Long posicao;
 	
-	@OneToMany(mappedBy = "morador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<VinculoResidencia> vinculosResidencia;
+	@Column(name = "GUIDE", nullable = true)
+	private String guide;
+	
+	@OneToMany(mappedBy = "morador")
+	private List<VinculoResidencia> vinculoResidencia;
 	
 	@PreUpdate
     public void preUpdate() {
