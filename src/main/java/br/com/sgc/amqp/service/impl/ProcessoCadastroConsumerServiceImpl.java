@@ -15,6 +15,7 @@ import br.com.sgc.entities.Residencia;
 import br.com.sgc.entities.VinculoResidencia;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.mapper.MoradorMapper;
+import br.com.sgc.mapper.ResidenciaMapper;
 import br.com.sgc.repositories.MoradorRepository;
 import br.com.sgc.repositories.ResidenciaRepository;
 import br.com.sgc.repositories.VinculoResidenciaRepository;
@@ -26,7 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ProcessoCadastroConsumerServiceImpl implements ConsumerService<ProcessoCadastroDto> {
 
 	@Autowired
-	private MoradorMapper moradorMapper; 
+	private MoradorMapper moradorMapper;
+	
+	@Autowired
+	private ResidenciaMapper residenciaMapper;
 	
 	@Autowired
 	private VinculoResidenciaRepository vinculoResidenciaRepository;
@@ -57,9 +61,15 @@ public class ProcessoCadastroConsumerServiceImpl implements ConsumerService<Proc
 			});			
 		}else {
 			Optional<Residencia> residencia = this.residenciaRepository.findByCepAndNumero(dto.getResidencia().getCep(), dto.getResidencia().getNumero());
-			if(!residencia.isPresent())
-				this.vinculoResidenciaRepository.save(this.moradorMapper.processoCadastroDtoToVinculoResidencia(dto));
-			else {
+			if(!residencia.isPresent()) {
+				//this.vinculoResidenciaRepository.save(this.moradorMapper.processoCadastroDtoToVinculoResidencia(dto));
+				VinculoResidencia vinculo = VinculoResidencia.builder()
+						.morador(this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto.getMorador())))
+						.residencia(this.residenciaRepository.save(this.residenciaMapper.residenciaDtoToResidencia(dto.getResidencia())))
+						.guide(dto.getGuide())
+						.build();	
+				vinculoResidenciaRepository.save(vinculo);	
+			}else {
 				VinculoResidencia vinculo = VinculoResidencia.builder()
 						.morador(this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto.getMorador())))
 						.residencia(residencia.get())

@@ -11,5 +11,5 @@ public abstract class VinculoResidenciaMapper {
 	
 	@Mapping(target = "morador.id", source = "moradorId")
 	@Mapping(target = "residencia.id", source = "residenciaId")
-	public abstract VinculoResidencia visitanteDtoToVisitante(VinculoResidenciaDto dto); 
+	public abstract VinculoResidencia vinculoResidenciaDtoToVinculoResidencia(VinculoResidenciaDto dto); 
 }
