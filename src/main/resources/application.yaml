@@ -21,3 +21,7 @@ visita:
 visitante:
   topic:
     name: visitante-mq
+    
+vinculo:
+  topic:
+    name: vinculo-mq

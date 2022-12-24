@@ -3,7 +3,6 @@ package br.com.sgc.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,10 +38,10 @@ public class VinculoResidencia implements Serializable {
 	@Column(name = "data_vinculo", nullable = false)
 	private Date dataVinculo;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	private Morador morador;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	private Residencia residencia;
 	
 	@PreUpdate
