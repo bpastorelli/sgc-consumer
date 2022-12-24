@@ -1,22 +1,18 @@
 package br.com.sgc.amqp.service.impl;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.sgc.amqp.service.ConsumerService;
-import br.com.sgc.dto.ResponsePublisherDto;
 import br.com.sgc.dto.VisitaDto;
 import br.com.sgc.entities.Veiculo;
 import br.com.sgc.entities.VinculoVeiculo;
 import br.com.sgc.entities.Visita;
 import br.com.sgc.entities.Visitante;
-import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.mapper.VeiculoMapper;
 import br.com.sgc.mapper.VisitaMapper;
 import br.com.sgc.repositories.ResidenciaRepository;
@@ -61,46 +57,37 @@ public class VisitaConsumerServiceImpl implements ConsumerService<VisitaDto> {
 		
 		log.info("Persistindo registro...");
 		
-		ResponsePublisherDto response = new ResponsePublisherDto();
+		this.validator.validar(dto);
 		
-		List<ErroRegistro> errors = this.validator.validar(dto);
-		response.setErrors(errors);
-		
-		if(response.getErrors().size() > 0) {			
-			response.getErrors().forEach(erro -> {
-				throw new AmqpRejectAndDontRequeueException(erro.getDetalhe()); 
-			});			
-		}else {
-			Visita visita = this.visitaMapper.visitaDtoToVisita(dto);;
-			visita.setVisitante(visitanteRepository.findByRg(dto.getRg()).get());
-			visita.setResidencia(this.residenciaRepository.findById(dto.getResidenciaId()).get());
+		Visita visita = this.visitaMapper.visitaDtoToVisita(dto);
+		visita.setVisitante(visitanteRepository.findByRg(dto.getRg()).get());
+		visita.setResidencia(this.residenciaRepository.findById(dto.getResidenciaId()).get());
 			
-			this.visitaRepository.save(visita);
+		this.visitaRepository.save(visita);
 			
-			if(dto.getPlaca() != "") {
-				Optional<Veiculo> veiculo = veiculoRepository.findByPlaca(dto.getPlaca().replace("-", "")); 
-				Optional<Visitante> visitante = visitanteRepository.findByRg(dto.getRg());
+		if(dto.getPlaca() != "") {
+			Optional<Veiculo> veiculo = veiculoRepository.findByPlaca(dto.getPlaca().replace("-", "")); 
+			Optional<Visitante> visitante = visitanteRepository.findByRg(dto.getRg());
 				
-				if(!veiculo.isPresent() && dto.getVeiculoVisita() != null) {
-					veiculo = Optional.of(this.veiculoMapper.visitaDtoToVeiculo(dto));
-					veiculo.get().setGuide(UUID.randomUUID().toString());
+			if(!veiculo.isPresent() && dto.getVeiculoVisita() != null) {
+				veiculo = Optional.of(this.veiculoMapper.visitaDtoToVeiculo(dto));
+				veiculo.get().setGuide(UUID.randomUUID().toString());
+				VinculoVeiculo vinculo = VinculoVeiculo
+					.builder()
+				    .guide(dto.getGuide())
+				    .veiculo(this.veiculoRepository.save(veiculo.get()))
+				    .visitante(visitante.get())
+				    .build();
+				this.vinculoVeiculoRepository.save(vinculo);
+			}else {
+				if(!this.vinculoVeiculoRepository.findByVisitanteIdAndVeiculoId(visitante.get().getId(), veiculo.get().getId()).isPresent() && veiculo.isPresent()) {					
 					VinculoVeiculo vinculo = VinculoVeiculo
 						.builder()
-					    .guide(dto.getGuide())
-					    .veiculo(this.veiculoRepository.save(veiculo.get()))
-					    .visitante(visitante.get())
-					    .build();
-					this.vinculoVeiculoRepository.save(vinculo);
-				}else {
-					if(!this.vinculoVeiculoRepository.findByVisitanteIdAndVeiculoId(visitante.get().getId(), veiculo.get().getId()).isPresent() && veiculo.isPresent()) {					
-						VinculoVeiculo vinculo = VinculoVeiculo
-							.builder()
-							.guide(dto.getGuide())
-							.veiculo(veiculo.get())
-							.visitante(visitante.get())
-							.build();
-						this.vinculoVeiculoRepository.save(vinculo);				
-					}
+						.guide(dto.getGuide())
+						.veiculo(veiculo.get())
+						.visitante(visitante.get())
+						.build();
+					this.vinculoVeiculoRepository.save(vinculo);				
 				}
 			}
 		}	

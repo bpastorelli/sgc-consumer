@@ -39,10 +39,10 @@ public class VinculoResidencia implements Serializable {
 	@Column(name = "data_vinculo", nullable = false)
 	private Date dataVinculo;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private Morador morador;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private Residencia residencia;
 	
 	@PreUpdate
