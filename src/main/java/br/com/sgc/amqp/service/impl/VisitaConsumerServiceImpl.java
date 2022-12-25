@@ -62,7 +62,7 @@ public class VisitaConsumerServiceImpl implements ConsumerService<VisitaDto> {
 		Visita visita = this.visitaMapper.visitaDtoToVisita(dto);
 		visita.setVisitante(visitanteRepository.findByRg(dto.getRg()).get());
 		visita.setResidencia(this.residenciaRepository.findById(dto.getResidenciaId()).get());
-			
+		
 		this.visitaRepository.save(visita);
 			
 		if(dto.getPlaca() != "") {

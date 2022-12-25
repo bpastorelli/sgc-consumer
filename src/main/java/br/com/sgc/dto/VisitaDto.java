@@ -15,6 +15,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class VisitaDto {
 	
+	private Long id;
+	
 	private String guide;
 	
 	@NotNull(message = "Campo RG é obrigatório!")

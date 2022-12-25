@@ -49,5 +49,17 @@
         "default": null
       }
     ]
+  },
+  {
+    "type": "record",
+    "name": "EncerraVisitaAvro",
+    "namespace": "br.com.sgc",
+    "fields": [
+      {
+        "name": "id",
+        "type": "long",
+        "default": 0
+      }
+    ]
   }
 ]
