@@ -1,5 +1,7 @@
 package br.com.sgc.amqp.service.impl;
 
+import java.sql.Time;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -57,12 +59,18 @@ public class VisitaConsumerServiceImpl implements ConsumerService<VisitaDto> {
 		
 		log.info("Persistindo registro...");
 		
+		Optional<Visita> visitaOpt = visitaRepository.findByGuide(dto.getGuide());
+		if(visitaOpt.isPresent()) {			
+			encerraVisita(visitaOpt.get());
+			return;
+		}
+		
 		this.validator.validar(dto);
 		
 		Visita visita = this.visitaMapper.visitaDtoToVisita(dto);
 		visita.setVisitante(visitanteRepository.findByRg(dto.getRg()).get());
 		visita.setResidencia(this.residenciaRepository.findById(dto.getResidenciaId()).get());
-			
+		
 		this.visitaRepository.save(visita);
 			
 		if(dto.getPlaca() != "") {
@@ -91,6 +99,16 @@ public class VisitaConsumerServiceImpl implements ConsumerService<VisitaDto> {
 				}
 			}
 		}	
+		
+	}
+	
+	private void encerraVisita(Visita visita) {
+		
+		visita.setDataSaida(new Date());
+		visita.setHoraSaida(new Time(visita.getDataSaida().getTime()));
+		visita.setPosicao(0);
+		
+		visitaRepository.save(visita);
 		
 	}
 	
