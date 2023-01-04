@@ -14,12 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VeiculoDto implements Serializable {
-	
 
 	private static final long serialVersionUID = 1423232434532327L;
 
-	private String guide;
-	
 	private Long id;
 	
 	@NotNull(message = "Campo Placa é obrigatório!")
@@ -35,8 +32,11 @@ public class VeiculoDto implements Serializable {
 	
 	private Long   ano;
 	
-	@NotNull(message = "O campo visitante é obrigatório!")
 	private Long   visitanteId;
+	
+	private Long posicao;
+	
+	private String guide;
 	
 	private String ticketVisitante;
 

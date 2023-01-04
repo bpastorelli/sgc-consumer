@@ -19,9 +19,10 @@ public class ConvertVeiculoAvroToVeiculoDtoImpl implements ConvertAvroToObject<V
 				.modelo(avro.getModelo().toString().toUpperCase())
 				.cor(avro.getCor().toString().toUpperCase())
 				.ano(avro.getAno())
+				.posicao(avro.getPosicao())
 				.visitanteId(avro.getVisitanteId())
-				.ticketVisitante(avro.getTicketVisitante().toString())
-				.guide(avro.getGuide().toString())
+				.ticketVisitante(avro.getTicketVisitante() != null ? avro.getTicketVisitante().toString() : null)
+				.guide(avro.getGuide() != null ? avro.getGuide().toString() : null)
 				.build();
 		
 		return veiculoDto;
