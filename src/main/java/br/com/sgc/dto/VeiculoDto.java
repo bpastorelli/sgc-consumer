@@ -35,6 +35,8 @@ public class VeiculoDto implements Serializable {
 	
 	private Long   ano;
 	
+	private Long posicao;
+	
 	@NotNull(message = "O campo visitante é obrigatório!")
 	private Long   visitanteId;
 	
