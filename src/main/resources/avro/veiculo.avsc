@@ -33,11 +33,7 @@
 		},
 		{
 			"name": "ticketVisitante",
-<<<<<<< HEAD
-			"type": ["string", "null"]
-=======
 			"type": ["string", "null"], "default": "null"
->>>>>>> refs/remotes/origin/master
 		},
 		{
 			"name": "guide",
