@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VeiculoDto implements Serializable {
-	
 
 	private static final long serialVersionUID = 1423232434532327L;
 
