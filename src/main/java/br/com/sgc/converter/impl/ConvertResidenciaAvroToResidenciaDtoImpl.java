@@ -12,7 +12,7 @@ public class ConvertResidenciaAvroToResidenciaDtoImpl implements ConvertAvroToOb
 	@Override
 	public ResidenciaDto convert(ResidenciaAvro avro) {
 		
-		ResidenciaDto moradorDto = ResidenciaDto
+		ResidenciaDto residenciaDto = ResidenciaDto
 				.builder()
 				.id(avro.getId())
 				.endereco(avro.getEndereco().toString().toUpperCase())
@@ -26,7 +26,7 @@ public class ConvertResidenciaAvroToResidenciaDtoImpl implements ConvertAvroToOb
 				.ticketMorador(avro.getTicketMorador() == null ? null : avro.getTicketMorador().toString())
 				.build();
 		
-		return moradorDto;
+		return residenciaDto;
 	}
 
 }
