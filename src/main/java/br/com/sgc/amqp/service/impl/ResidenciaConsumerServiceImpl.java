@@ -1,7 +1,5 @@
 package br.com.sgc.amqp.service.impl;
 
-import java.util.Optional;
-
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.dto.ResidenciaDto;
 import br.com.sgc.dto.ResponsePublisherDto;
-import br.com.sgc.entities.Residencia;
 import br.com.sgc.entities.VinculoResidencia;
 import br.com.sgc.mapper.ResidenciaMapper;
 import br.com.sgc.repositories.ResidenciaRepository;
@@ -50,17 +47,15 @@ public class ResidenciaConsumerServiceImpl implements ConsumerService<Residencia
 			});			
 		}else {
 			
-			Optional<Residencia> residencia = this.residenciaRepository.findByCepAndNumero(dto.getCep(), dto.getNumero());
-			
-			if(residencia.isPresent() && dto.getMorador().isPresent()) {
+			if(dto.getId() != null && dto.getTicketMorador() != null) {
 				log.info("Registrando vinculo de morador a residência exisntente...");
 				VinculoResidencia vinculo = VinculoResidencia.builder()
 						.morador(dto.getMorador().get())
-						.residencia(residencia.get())
+						.residencia(this.residenciaMapper.residenciaDtoToResidencia(dto))
 						.guide(dto.getGuide())
 						.build();	
 				vinculoResidenciaRepository.save(vinculo);	
-			}else if(!residencia.isPresent() && dto.getMorador().isPresent()) {
+			}else if(dto.getId() == null && dto.getTicketMorador() != null ) {
 				log.info("Registrando residencia com morador vinculado...");
 				VinculoResidencia vinculo = VinculoResidencia.builder()
 						.morador(dto.getMorador().get())
