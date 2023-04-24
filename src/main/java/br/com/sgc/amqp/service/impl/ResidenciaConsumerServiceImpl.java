@@ -48,7 +48,7 @@ public class ResidenciaConsumerServiceImpl implements ConsumerService<Residencia
 		}else {
 			
 			if(dto.getId() != null && dto.getTicketMorador() != null) {
-				log.info("Registrando vinculo de morador a residência exisntente...");
+				log.info("Registrando vinculo de morador a residência existente...");
 				VinculoResidencia vinculo = VinculoResidencia.builder()
 						.morador(dto.getMorador().get())
 						.residencia(this.residenciaMapper.residenciaDtoToResidencia(dto))
