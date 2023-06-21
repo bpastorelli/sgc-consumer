@@ -1,6 +1,7 @@
 package br.com.sgc.dto;
 
 import java.util.Date;
+import java.util.Optional;
 
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -42,7 +43,7 @@ public class ResidenciaDto {
 	private String uf;
 	
 	@Transient
-	private Morador morador;
+	private Optional<Morador> morador;
 	
 	@Transient
 	private Date dataCriacao;

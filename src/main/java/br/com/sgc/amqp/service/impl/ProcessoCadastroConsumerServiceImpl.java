@@ -60,7 +60,7 @@ public class ProcessoCadastroConsumerServiceImpl implements ConsumerService<Proc
 				throw new AmqpRejectAndDontRequeueException(erro.getDetalhe()); 
 			});			
 		}else {
-			Optional<Residencia> residencia = this.residenciaRepository.findByCepAndNumero(dto.getResidencia().getCep(), dto.getResidencia().getNumero());
+			Optional<Residencia> residencia = this.residenciaRepository.findByCepAndNumeroAndComplemento(dto.getResidencia().getCep(), dto.getResidencia().getNumero(), dto.getResidencia().getComplemento());
 			if(!residencia.isPresent()) {
 				//this.vinculoResidenciaRepository.save(this.moradorMapper.processoCadastroDtoToVinculoResidencia(dto));
 				VinculoResidencia vinculo = VinculoResidencia.builder()
