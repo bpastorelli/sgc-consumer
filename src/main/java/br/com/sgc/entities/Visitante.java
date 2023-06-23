@@ -3,6 +3,7 @@ package br.com.sgc.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,20 +17,23 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name = "visitante")
 public class Visitante implements Serializable {
 	
 	private static final long serialVersionUID = -5754246207015712519L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional=false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long   id;
 	
 	@Column(name = "nome", nullable = false)
