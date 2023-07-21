@@ -51,6 +51,18 @@ public class Utils {
 	      .toLocalDateTime();
 	}
 	
+	public static LocalDateTime convertToLocalDateTime(CharSequence dateToConvert) {
+	    
+		return LocalDateTime.parse(dateToConvert);
+		
+	}
+	
+	public static LocalDate convertToLocalDate(CharSequence dateToConvert) {
+	    
+		return LocalDate.parse(dateToConvert);
+		
+	}
+	
 	public static LocalDateTime convertToLocalDateTime(Long dateToConvert) {
 	    LocalDateTime localDateTime =
 	            LocalDateTime.ofInstant(Instant.ofEpochMilli(dateToConvert), 

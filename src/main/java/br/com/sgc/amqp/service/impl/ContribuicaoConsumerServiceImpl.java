@@ -35,18 +35,21 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 		
 		log.info("Persistindo registros...");
 		
+		SituacaoEnum situacao = null;
+		
 		try {
 			
 			this.lancamentoRepository.saveAll(dto);
+			situacao = SituacaoEnum.CONCLUIDO;
 			
 		} catch (Exception e) {
 			
-			this.salvarHistorico(dto.get(0).getRequisicaoId(), SituacaoEnum.FALHA);
+			situacao = SituacaoEnum.FALHA;
 			log.info("Processamento finalizando com falha.");
 			
 		}finally {
 		
-			this.salvarHistorico(dto.get(0).getRequisicaoId(), SituacaoEnum.CONCLUIDO);
+			this.salvarHistorico(dto.get(0).getRequisicaoId(), situacao);
 			
 		}
 		

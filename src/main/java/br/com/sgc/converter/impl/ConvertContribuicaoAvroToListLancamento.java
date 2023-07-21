@@ -25,7 +25,7 @@ public class ConvertContribuicaoAvroToListLancamento implements ConvertAvroToObj
 		contribuicao.getLancamentos().forEach(l -> {
 			
 			Morador morador = Morador.builder()
-					.id(l.getResidenciaId())
+					.id(l.getMoradorId())
 					.build();
 			
 			Residencia residencia = Residencia.builder()
@@ -40,6 +40,7 @@ public class ConvertContribuicaoAvroToListLancamento implements ConvertAvroToObj
 			lancamento.setMorador(morador);
 			lancamento.setResidencia(residencia);
 			lancamento.setValor(BigDecimal.valueOf(l.getValor()));
+			lancamento.setRequisicaoId(contribuicao.getRequisicaoId().toString());
 			
 			lancamentos.add(lancamento);
 			

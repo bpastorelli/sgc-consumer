@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,6 +37,7 @@ public class Lancamento implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER)
 	private Morador morador;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@Column(name = "data_pagamento", nullable = false)
 	private LocalDateTime dataPagamento;
