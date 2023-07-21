@@ -1,6 +1,7 @@
 package br.com.sgc.converter.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class ConvertContribuicaoAvroToListLancamento implements ConvertAvroToObj
 			Lancamento lancamento = new Lancamento();
 			lancamento.setId(l.getId() == null ? 0 : l.getId());
 			lancamento.setDataPagamento(Utils.convertToLocalDateTime(l.getDataPagamento()));
+			lancamento.setDataCriacao(LocalDate.now());
 			lancamento.setPeriodo(l.getPeriodo().toString());
 			lancamento.setDocumento(l.getDocumento().toString());
 			lancamento.setMorador(morador);
