@@ -2,16 +2,20 @@ package br.com.sgc.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -26,11 +30,11 @@ public class Lancamento implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "morador_id", nullable = false)
-	private Long moradorId;
+	@OneToOne(fetch = FetchType.EAGER)
+	private Morador morador;
 	
 	@Column(name = "data_pagamento", nullable = false)
-	private Date dataPagamento;
+	private LocalDateTime dataPagamento;
 	
 	@Column(name = "mes_referencia", nullable = false)
 	private String periodo;
@@ -42,26 +46,25 @@ public class Lancamento implements Serializable {
 	private BigDecimal valor;
 	
 	@Column(name = "data_criacao", nullable = false)
-	private Date dataCriacao;
+	private LocalDate dataCriacao;
 	
 	@Column(name = "data_atualizacao", nullable = false)
-	private Date dataAtualizacao;
+	private LocalDate dataAtualizacao;
 	
-	@Column(name = "residencia_id", nullable = false)
-	private Long residenciaId;
+	@OneToOne(fetch = FetchType.EAGER)
+	private Residencia residencia;
 	
-	public Lancamento() {
-		
-	}
+	@Transient
+	private String requisicaoId;
 	
 	@PreUpdate
     public void preUpdate() {
-        dataAtualizacao = new Date();
+        dataAtualizacao = LocalDate.now();
     }
 	
     @PrePersist
     public void prePersist() {
-        final Date atual = new Date();
+        final LocalDate atual = LocalDate.now();
         dataCriacao = atual;
         dataAtualizacao = atual;
     }
