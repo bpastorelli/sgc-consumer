@@ -30,19 +30,6 @@ public class ValidarCadastroVeiculo implements Validators<VeiculoDto> {
 		
 		if(t.getId() == null || t.getId() == 0) {
 			
-			if(t.getTicketVisitante().isEmpty() && t.getVisitanteId() == null)
-				errors.getErros().add(new ErroRegistro("", TITULO, " Visitante responsável não informado!"));
-			
-			if(t.getTicketVisitante() != "") {
-				if(!this.visitanteRepository.findByGuide(t.getTicketVisitante()).isPresent())
-					errors.getErros().add(new ErroRegistro("", TITULO, " O visitante informado não existe!"));
-			}
-			
-			if(t.getVisitanteId() != null) {
-				if(!this.visitanteRepository.findById(t.getVisitanteId()).isPresent())
-					errors.getErros().add(new ErroRegistro("", TITULO, " O visitante informado (" + t.getVisitanteId() + ") não existe!"));			
-			}
-			
 			if(t.getPlaca() == null) 
 				errors.getErros().add(new ErroRegistro("", TITULO, " Não existem veículos para cadastro!"));
 			

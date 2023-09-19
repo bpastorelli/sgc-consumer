@@ -41,6 +41,7 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 			
 			this.lancamentoRepository.saveAll(dto);
 			situacao = SituacaoEnum.CONCLUIDO;
+			log.info("Processamento finalizando com sucesso.");
 			
 		} catch (Exception e) {
 			
@@ -49,15 +50,12 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 			
 		}finally {
 		
-			this.salvarHistorico(dto.get(0).getRequisicaoId(), situacao);
+			//this.salvarHistorico(dto.get(0).getRequisicaoId(), situacao);
 			
 		}
 		
-		log.info("Processamento finalizando com sucesso.");
-		
 	}
 	
-	@Async
 	private void salvarHistorico(String file, SituacaoEnum situacao) {
 		
 		if(!Optional.ofNullable(this.historico.getId()).isPresent()) {
