@@ -1,11 +1,8 @@
 package br.com.sgc.amqp.service.impl;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +38,7 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 			
 			this.lancamentoRepository.saveAll(dto);
 			situacao = SituacaoEnum.CONCLUIDO;
-			log.info("Processamento finalizando com sucesso.");
+			log.info("Processamento finalizado com sucesso.");
 			
 		} catch (Exception e) {
 			
@@ -50,20 +47,16 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 			
 		}finally {
 		
-			//this.salvarHistorico(dto.get(0).getRequisicaoId(), situacao);
+			this.salvarHistorico(dto.get(0).getRequisicaoId(), situacao);
 			
 		}
 		
 	}
 	
-	private void salvarHistorico(String file, SituacaoEnum situacao) {
+	private void salvarHistorico(String idRequisicao, SituacaoEnum situacao) {
 		
-		if(!Optional.ofNullable(this.historico.getId()).isPresent()) {
-			this.historico.setNomeArquivo(file);
-			this.historico.setIdRequisicao(UUID.randomUUID().toString());
-			this.historico.setSituacao(situacao);			
-		}else
-			this.historico.setSituacao(situacao);
+		this.historico = this.historicoRepository.findByIdRequisicao(idRequisicao).get();
+		this.historico.setSituacao(situacao);
 		
 		this.historico = this.historicoRepository.save(historico);
 		
