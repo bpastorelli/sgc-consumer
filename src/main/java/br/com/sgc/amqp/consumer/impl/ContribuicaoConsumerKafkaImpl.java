@@ -14,11 +14,16 @@ import br.com.sgc.amqp.consumer.AmqpConsumer;
 import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.converter.ConvertAvroToObject;
 import br.com.sgc.entities.Lancamento;
+import br.com.sgc.enums.SituacaoEnum;
+import br.com.sgc.service.HistoricoImportacaoService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
 public class ContribuicaoConsumerKafkaImpl implements AmqpConsumer<ContribuicaoAvro> {
+	
+	@Autowired
+	private HistoricoImportacaoService historicoService;
 	
 	@Autowired
 	private ConsumerService<List<Lancamento>> consumerService;
@@ -31,10 +36,19 @@ public class ContribuicaoConsumerKafkaImpl implements AmqpConsumer<ContribuicaoA
 		
 		log.info("Recebida a mensagem, enviando para o serviço...");
 		
+		SituacaoEnum situacao = null;
+		
 		try {
 			this.consumerService.action(this.converter.convert(message.value()));
+			situacao = SituacaoEnum.CONCLUIDO;
+			
 		} catch (Exception ex) {
+			situacao = SituacaoEnum.FALHA;
 			throw new AmqpRejectAndDontRequeueException(ex);
+		}finally {
+			
+			this.historicoService.salvarHistorico(this.converter.convert(message.value()).get(0).getRequisicaoId(), situacao);
+			
 		}
 		
 		ack.acknowledge();

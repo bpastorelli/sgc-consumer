@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.sgc.amqp.service.ConsumerService;
-import br.com.sgc.entities.HistoricoImportacao;
 import br.com.sgc.entities.Lancamento;
-import br.com.sgc.enums.SituacaoEnum;
-import br.com.sgc.repositories.HistoricoImportacaoRepository;
 import br.com.sgc.repositories.LancamentoRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,11 +17,6 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 
 	@Autowired
 	private LancamentoRepository lancamentoRepository;
-	
-	@Autowired
-	private HistoricoImportacaoRepository historicoRepository;
-	
-	private HistoricoImportacao historico = new HistoricoImportacao();
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -32,33 +24,16 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 		
 		log.info("Persistindo registros...");
 		
-		SituacaoEnum situacao = null;
-		
 		try {
 			
 			this.lancamentoRepository.saveAll(dto);
-			situacao = SituacaoEnum.CONCLUIDO;
 			log.info("Processamento finalizado com sucesso.");
 			
 		} catch (Exception e) {
 			
-			situacao = SituacaoEnum.FALHA;
-			log.info("Processamento finalizando com falha.");
-			
-		}finally {
+			log.error("Processamento finalizado com falha: " + e.getMessage() + ")");
 		
-			this.salvarHistorico(dto.get(0).getRequisicaoId(), situacao);
-			
 		}
-		
-	}
-	
-	private void salvarHistorico(String idRequisicao, SituacaoEnum situacao) {
-		
-		this.historico = this.historicoRepository.findByIdRequisicao(idRequisicao).get();
-		this.historico.setSituacao(situacao);
-		
-		this.historico = this.historicoRepository.save(historico);
 		
 	}
 	
