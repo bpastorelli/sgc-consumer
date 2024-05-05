@@ -11,6 +11,7 @@ services:
       - app-net
     environment:
       - SPRING_KAFKA_HOST=broker
+      - SPRING_KAFKA_REGISTRY=http://schema-registry
       - DEBIAN_FRONTEND=noninteractive
       - TZ=America/Sao_Paulo
     volumes:
