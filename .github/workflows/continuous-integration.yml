@@ -66,5 +66,3 @@ jobs:
         cluster: ${{ secrets.CLUSTER_NAME }}
         wait-for-service-stability: true
 
-    
-        
