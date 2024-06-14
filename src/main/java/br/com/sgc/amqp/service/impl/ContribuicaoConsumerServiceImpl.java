@@ -49,7 +49,6 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 			
 			this.lancamentoRepository.saveAll(dto);
 			situacao = SituacaoEnum.CONCLUIDO;
-			log.info("Processamento finalizado com sucesso.");
 			
 		} catch (Exception e) {
 			
@@ -75,6 +74,7 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 			historico.ifPresent(p -> { 
 				p.setSituacao(situacao); 
 				this.historicoRepository.save(historico.get());
+				log.info("Processamento finalizado com {}", situacao);
 			});	
 		}
 		
