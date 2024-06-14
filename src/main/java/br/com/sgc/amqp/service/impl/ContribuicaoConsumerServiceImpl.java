@@ -1,6 +1,7 @@
 package br.com.sgc.amqp.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,6 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 	
 	@Autowired
 	private HistoricoImportacaoRepository historicoRepository;
-	
-	private HistoricoImportacao historico = new HistoricoImportacao();
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -55,10 +54,11 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 	
 	private void salvarHistorico(String idRequisicao, SituacaoEnum situacao) {
 		
-		this.historico = this.historicoRepository.findByIdRequisicao(idRequisicao).get();
-		this.historico.setSituacao(situacao);
-		
-		this.historico = this.historicoRepository.save(historico);
+		Optional<HistoricoImportacao> historico = this.historicoRepository.findByIdRequisicao(idRequisicao);
+		historico.ifPresent(p -> { 
+			p.setSituacao(situacao); 
+			this.historicoRepository.save(historico.get());
+		});
 		
 	}
 	
