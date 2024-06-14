@@ -57,6 +57,12 @@ public class Lancamento implements Serializable {
 	@Transient
 	private String requisicaoId;
 	
+	@Transient
+	private Integer page;
+	
+	@Transient
+	private Integer totalPages;
+	
 	@PreUpdate
     public void preUpdate() {
         dataAtualizacao = LocalDate.now();

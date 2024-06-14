@@ -43,6 +43,8 @@ public class ConvertContribuicaoAvroToListLancamento implements ConvertAvroToObj
 			lancamento.setResidencia(residencia);
 			lancamento.setValor(BigDecimal.valueOf(l.getValor()));
 			lancamento.setRequisicaoId(contribuicao.getRequisicaoId().toString());
+			lancamento.setPage(contribuicao.getPage());
+			lancamento.setTotalPages(contribuicao.getTotalPages());
 			
 			lancamentos.add(lancamento);
 			
