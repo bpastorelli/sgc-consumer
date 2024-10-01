@@ -1,11 +1,13 @@
 package br.com.sgc.validators.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.sgc.dto.VeiculoDto;
+import br.com.sgc.entities.Veiculo;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.errorheadling.RegistroException;
 import br.com.sgc.repositories.VeiculoRepository;
@@ -38,8 +40,14 @@ public class ValidarCadastroVeiculo implements Validators<VeiculoDto> {
 			
 		}else {
 			
-			if(!this.veiculoRepository.findById(t.getId()).isPresent())
-				errors.getErros().add(new ErroRegistro("", TITULO, " Veículo inexistente!"));;			
+			Optional<Veiculo> veiculo = this.veiculoRepository.findById(t.getId());
+			
+			if(!veiculo.isPresent())
+				errors.getErros().add(new ErroRegistro("", TITULO, " Veículo inexistente!"));
+			else {
+				t.setDataCriacao(veiculo.get().getDataCriacao());
+			}
+			
 			
 		}
 		

@@ -1,7 +1,9 @@
 package br.com.sgc.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -35,6 +37,9 @@ public class VeiculoDto implements Serializable {
 	private Long   ano;
 	
 	private Long posicao;
+	
+	@Transient
+	private Date dataCriacao;
 	
 	@NotNull(message = "O campo visitante é obrigatório!")
 	private Long   visitanteId;
