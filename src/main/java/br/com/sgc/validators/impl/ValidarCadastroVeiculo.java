@@ -11,7 +11,6 @@ import br.com.sgc.entities.Veiculo;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.errorheadling.RegistroException;
 import br.com.sgc.repositories.VeiculoRepository;
-import br.com.sgc.repositories.VisitanteRepository;
 import br.com.sgc.validators.Validators;
 
 @Component
@@ -19,9 +18,6 @@ public class ValidarCadastroVeiculo implements Validators<VeiculoDto> {
 
 	@Autowired
 	private VeiculoRepository veiculoRepository;
-	
-	@Autowired
-	private VisitanteRepository visitanteRepository;
 	
 	private static final String TITULO = "Cadastro de veículo recusado!";
 	

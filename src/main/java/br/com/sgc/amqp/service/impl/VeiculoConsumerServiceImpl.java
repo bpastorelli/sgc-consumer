@@ -42,9 +42,9 @@ public class VeiculoConsumerServiceImpl implements ConsumerService<VeiculoDto> {
 		
 		ResponsePublisherDto response = new ResponsePublisherDto();
 		
+		List<ErroRegistro> errors = this.validator.validar(dto);
 		Veiculo veiculo = this.veiculoMapper.veiculoDtoToVeiculo(dto);
 		
-		List<ErroRegistro> errors = this.validator.validar(dto);
 		response.setErrors(errors);
 		
 		if(response.getErrors().size() > 0) {			
