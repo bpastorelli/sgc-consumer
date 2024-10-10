@@ -1,5 +1,6 @@
 package br.com.sgc.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Optional;
 
@@ -14,8 +15,10 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ResidenciaDto {
+public class ResidenciaDto implements Serializable {
 	
+	private static final long serialVersionUID = 2291029109210291L;
+
 	private Long   id;
 	
 	@NotNull(message = "Endereço não pode ser nulo.")
