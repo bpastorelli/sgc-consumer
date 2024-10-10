@@ -7,30 +7,25 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
-import br.com.sgc.VinculoResidenciaAvro;
 import br.com.sgc.amqp.consumer.AmqpConsumer;
 import br.com.sgc.amqp.service.ConsumerService;
-import br.com.sgc.converter.ConvertAvroToObject;
 import br.com.sgc.dto.VinculoResidenciaDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class VinculoResidenciaConsumerKafkaImpl implements AmqpConsumer<VinculoResidenciaAvro> {
+public class VinculoResidenciaConsumerKafkaImpl implements AmqpConsumer<VinculoResidenciaDto> {
 	
 	@Autowired
 	private ConsumerService<VinculoResidenciaDto> consumerService;
 	
-	@Autowired
-	private ConvertAvroToObject<VinculoResidenciaDto, VinculoResidenciaAvro> converter;
-	
 	@KafkaListener(topics = "${vinculo.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
-	public void consumer(ConsumerRecord<String, VinculoResidenciaAvro> message, Acknowledgment ack) {
+	public void consumer(ConsumerRecord<String, VinculoResidenciaDto> message, Acknowledgment ack) {
 		
 		log.info("Recebida a mensagem, enviando para o serviço...");
 		
 		try {
-			this.consumerService.action(this.converter.convert(message.value()));
+			this.consumerService.action(message.value());
 		} catch (Exception ex) {
 			throw new AmqpRejectAndDontRequeueException(ex);
 		};

@@ -32,7 +32,6 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 	@Transactional(rollbackFor = Exception.class)
 	public void action(List<Lancamento> dto) throws Exception {
 		
-		log.info("Persistindo registros...");
 		
 		SituacaoEnum situacao = null;
 		
@@ -45,6 +44,7 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 			page = dto.get(0).getPage();
 			totalPages = dto.get(0).getTotalPages();
 			idRequisicao = dto.get(0).getRequisicaoId();
+			log.info("Persistindo registros requisição {}...", idRequisicao);
 			ProcessConsumer.PAGES.add(new ConsumerPageDto(idRequisicao, page));
 			
 			this.lancamentoRepository.saveAll(dto);
@@ -74,7 +74,7 @@ public class ContribuicaoConsumerServiceImpl implements ConsumerService<List<Lan
 			historico.ifPresent(p -> { 
 				p.setSituacao(situacao); 
 				this.historicoRepository.save(historico.get());
-				log.info("Processamento finalizado com {}", situacao);
+				log.info("Processamento requisição {} finalizado com o status {}", idRequisicao, situacao);
 			});	
 		}
 		
