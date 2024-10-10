@@ -27,7 +27,7 @@ public class ResidenciaConsumerKafkaImpl implements AmqpConsumer<ResidenciaDto> 
 		try {
 			this.consumerService.action(message.value());
 		} catch (Exception ex) {
-			throw new AmqpRejectAndDontRequeueException(ex);
+			throw new AmqpRejectAndDontRequeueException(ex.getMessage());
 		}
 		
 		ack.acknowledge();
