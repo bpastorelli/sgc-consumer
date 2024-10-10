@@ -16,7 +16,7 @@ public class ResidenciaConsumerKafkaImpl {
 	@Autowired
 	private ConsumerService<ResidenciaDto> consumerService;
 	
-	@KafkaListener(topics = "${residencia.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
+	@KafkaListener(topics = "${residencia.topic.name}", containerFactory = "jsonContainerFactory", groupId = "${spring.kafka.consumer.group-id}")
 	public void consumer(ResidenciaDto message) {
 		
 		log.info("Recebida a mensagem, enviando para o serviço...");
