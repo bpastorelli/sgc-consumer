@@ -1,6 +1,5 @@
 package br.com.sgc.dto;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Optional;
 
@@ -10,14 +9,18 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.sgc.entities.Morador;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Builder
-public class ResidenciaDto implements Serializable {
-
-	private static final long serialVersionUID = 1323233417554L;
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+public class ResidenciaDto {
 
 	private Long   id;
 	

@@ -3,7 +3,6 @@ package br.com.sgc.amqp.consumer.impl;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +18,7 @@ public class ResidenciaConsumerKafkaImpl {
 	private ConsumerService<ResidenciaDto> consumerService;
 	
 	@KafkaListener(topics = "${residencia.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
-	public void consumer(@Payload ResidenciaDto message, Acknowledgment ack) {
+	public void consumer(@Payload ResidenciaDto message) {
 		
 		log.info("Recebida a mensagem, enviando para o serviço...");
 		
@@ -28,8 +27,6 @@ public class ResidenciaConsumerKafkaImpl {
 		} catch (Exception ex) {
 			throw new AmqpRejectAndDontRequeueException(ex.getMessage());
 		}
-		
-		ack.acknowledge();
 		
 	}
 
