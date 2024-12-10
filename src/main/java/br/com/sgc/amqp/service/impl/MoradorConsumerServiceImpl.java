@@ -54,7 +54,7 @@ public class MoradorConsumerServiceImpl implements ConsumerService<MoradorDto> {
 				log.info("Registrando com vinculo de residência...");
 				VinculoResidencia vinculo = VinculoResidencia.builder()
 						.morador(this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto)))
-						.residencia(dto.getResidencia())
+						.residencia(dto.getResidenciaEntity())
 						.guide(dto.getGuide())
 						.build();	
 				vinculoResidenciaRepository.save(vinculo);					

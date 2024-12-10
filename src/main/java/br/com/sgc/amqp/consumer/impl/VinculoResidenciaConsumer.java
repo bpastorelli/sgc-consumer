@@ -17,7 +17,7 @@ public class VinculoResidenciaConsumer {
 	@Autowired
 	private ConsumerService<VinculoResidenciaDto> consumerService;
 	
-	@KafkaListener(topics = "${vinculo.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
+	/*@KafkaListener(topics = "${vinculo.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
 	public void consumer(@Payload VinculoResidenciaDto message) {
 		
 		log.info("Recebida a mensagem, enviando para o serviço...");
@@ -28,6 +28,6 @@ public class VinculoResidenciaConsumer {
 			throw new AmqpRejectAndDontRequeueException(ex);
 		};
 		
-	}
+	}*/
 
 }

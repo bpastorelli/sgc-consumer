@@ -1,5 +1,6 @@
 package br.com.sgc.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Optional;
 
@@ -20,7 +21,9 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResidenciaDto {
+public class ResidenciaDto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Long   id;
 	
@@ -54,8 +57,8 @@ public class ResidenciaDto {
 	@Transient
 	private Date dataCriacao;
 	
-	private String guide;
-	
 	private transient String ticketMorador;
+	
+	private String guide;
 
 }

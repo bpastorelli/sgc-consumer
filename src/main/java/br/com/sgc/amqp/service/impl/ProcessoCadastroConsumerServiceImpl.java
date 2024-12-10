@@ -11,14 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.dto.ProcessoCadastroDto;
 import br.com.sgc.dto.ResponsePublisherDto;
+import br.com.sgc.entities.Morador;
 import br.com.sgc.entities.Residencia;
-import br.com.sgc.entities.VinculoResidencia;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.mapper.MoradorMapper;
 import br.com.sgc.mapper.ResidenciaMapper;
 import br.com.sgc.repositories.MoradorRepository;
 import br.com.sgc.repositories.ResidenciaRepository;
-import br.com.sgc.repositories.VinculoResidenciaRepository;
 import br.com.sgc.validators.Validators;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,9 +30,6 @@ public class ProcessoCadastroConsumerServiceImpl implements ConsumerService<Proc
 	
 	@Autowired
 	private ResidenciaMapper residenciaMapper;
-	
-	@Autowired
-	private VinculoResidenciaRepository vinculoResidenciaRepository;
 	
 	@Autowired
 	private ResidenciaRepository residenciaRepository;
@@ -60,24 +56,28 @@ public class ProcessoCadastroConsumerServiceImpl implements ConsumerService<Proc
 				throw new AmqpRejectAndDontRequeueException(erro.getDetalhe()); 
 			});			
 		}else {
-			Optional<Residencia> residencia = this.residenciaRepository.findByCepAndNumeroAndComplemento(dto.getResidencia().getCep(), dto.getResidencia().getNumero(), dto.getResidencia().getComplemento());
-			if(!residencia.isPresent()) {
-				//this.vinculoResidenciaRepository.save(this.moradorMapper.processoCadastroDtoToVinculoResidencia(dto));
-				VinculoResidencia vinculo = VinculoResidencia.builder()
-						.morador(this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto.getMorador())))
-						.residencia(this.residenciaRepository.save(this.residenciaMapper.residenciaDtoToResidencia(dto.getResidencia())))
-						.guide(dto.getGuide())
-						.build();	
-				vinculoResidenciaRepository.save(vinculo);	
-			}else {
-				VinculoResidencia vinculo = VinculoResidencia.builder()
-						.morador(this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto.getMorador())))
-						.residencia(residencia.get())
-						.guide(dto.getGuide())
-						.build();	
-				vinculoResidenciaRepository.save(vinculo);	
+			this.tratarGuide(dto);
+			Optional<Residencia> residencia = this.residenciaRepository.findByCepAndNumeroAndComplemento(dto.getMorador().getResidencia().getCep(), dto.getMorador().getResidencia().getNumero(), dto.getMorador().getResidencia().getComplemento());
+			Optional<Morador> morador = this.moradorRepository.findByCpf(dto.getMorador().getCpf());
+			
+			if (!residencia.isPresent() && !morador.isPresent()) {
+				this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto.getMorador()));
+				this.residenciaRepository.save(this.residenciaMapper.residenciaDtoToResidencia(dto.getMorador().getResidencia()));
+			} else if (residencia.isPresent() && !morador.isPresent()) {
+				this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto.getMorador()));	
+			} else if (!residencia.isPresent() && morador.isPresent()) {
+				this.residenciaRepository.save(this.residenciaMapper.residenciaDtoToResidencia(dto.getMorador().getResidencia()));
+			} else {
+				log.info("Nada para gravar de Morador e Residencia.");
 			}
 		}
+		
+	}
+	
+	private void tratarGuide(ProcessoCadastroDto dto) {
+		
+		dto.getMorador().setGuide(dto.getGuide());
+		dto.getMorador().getResidencia().setGuide(dto.getGuide());
 		
 	}
 	

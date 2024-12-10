@@ -55,7 +55,7 @@ public class ValidarCadastroMorador implements Validators<MoradorDto> {
 				morador.setResidenciaId(morador.getResidenciaId() == null ? 0 : morador.getResidenciaId());
 				
 				if(morador.getResidenciaId() != null && morador.getResidenciaId() != 0)
-					morador.setResidencia(residenciaRepository.findById(morador.getResidenciaId()).get());
+					morador.setResidenciaEntity(residenciaRepository.findById(morador.getResidenciaId()).get());
 			
 			}else {
 				

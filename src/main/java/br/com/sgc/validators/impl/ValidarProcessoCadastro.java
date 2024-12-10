@@ -43,11 +43,11 @@ public class ValidarProcessoCadastro implements Validators<ProcessoCadastroDto> 
 				t.getMorador().setAssociado(t.getMorador().getAssociado() == null ? 0 : t.getMorador().getAssociado());
 				
 				Optional<Residencia> residencia = residenciaRepsository.findByCepAndNumeroAndComplemento(
-						t.getResidencia().getCep()
-						, t.getResidencia().getNumero()
-						, t.getResidencia().getComplemento());
+						t.getMorador().getResidencia().getCep()
+						, t.getMorador().getResidencia().getNumero()
+						, t.getMorador().getResidencia().getComplemento());
 				if(residencia.isPresent())
-					t.setResidencia(this.residenciaMapper.residenciaToResidenciaDto(residencia.get()));
+					t.getMorador().setResidencia(this.residenciaMapper.residenciaToResidenciaDto(residencia.get()));
 
 			}else {
 				

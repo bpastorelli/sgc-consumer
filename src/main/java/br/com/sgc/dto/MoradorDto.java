@@ -44,6 +44,8 @@ public class MoradorDto implements Serializable {
 	
 	private String guide;
 	
+	private ResidenciaDto residencia;
+	
 	@Transient
 	private String senha;
 	
@@ -51,6 +53,6 @@ public class MoradorDto implements Serializable {
 	private Date dataCriacao;
 	
 	@Transient
-	private Residencia residencia;
+	private Residencia residenciaEntity;
 
 }

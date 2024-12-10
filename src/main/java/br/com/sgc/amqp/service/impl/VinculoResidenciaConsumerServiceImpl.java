@@ -46,7 +46,7 @@ public class VinculoResidenciaConsumerServiceImpl implements ConsumerService<Vin
 		Morador morador = moradorRepository.findById(dto.getMoradorId()).get();
 		
 		processoDto.setGuide(dto.getGuide());
-		processoDto.setResidencia(this.residenciaMapper.residenciaToResidenciaDto(residencia));
+		processoDto.getMorador().setResidencia(this.residenciaMapper.residenciaToResidenciaDto(residencia));
 		processoDto.setMorador(this.moradorMapper.moradorToMoradorDto(morador));
 		
 		this.vinculoResidenciaRepository.save(this.moradorMapper.processoCadastroDtoToVinculoResidencia(processoDto));	

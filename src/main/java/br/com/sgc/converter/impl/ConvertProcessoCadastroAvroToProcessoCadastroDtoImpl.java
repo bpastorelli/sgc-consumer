@@ -41,10 +41,11 @@ public class ConvertProcessoCadastroAvroToProcessoCadastroDtoImpl implements Con
 				.guide(avro.getGuide().toString())
 				.build();				
 		
+		morador.setResidencia(residencia);
+		
 		ProcessoCadastroDto processoDto = ProcessoCadastroDto
 				.builder()
 				.morador(morador)
-				.residencia(residencia)
 				.guide(avro.getGuide().toString())
 				.build();
 		
