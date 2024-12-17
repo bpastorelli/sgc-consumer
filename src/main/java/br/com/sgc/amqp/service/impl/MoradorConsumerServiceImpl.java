@@ -10,11 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.sgc.amqp.service.ConsumerService;
 import br.com.sgc.dto.MoradorDto;
 import br.com.sgc.dto.ResponsePublisherDto;
-import br.com.sgc.entities.VinculoResidencia;
 import br.com.sgc.errorheadling.ErroRegistro;
 import br.com.sgc.mapper.MoradorMapper;
 import br.com.sgc.repositories.MoradorRepository;
-import br.com.sgc.repositories.VinculoResidenciaRepository;
 import br.com.sgc.validators.Validators;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,9 +25,6 @@ public class MoradorConsumerServiceImpl implements ConsumerService<MoradorDto> {
 	
 	@Autowired
 	private MoradorRepository moradorRepository; 
-	
-	@Autowired
-	private VinculoResidenciaRepository vinculoResidenciaRepository;
 	
 	@Autowired
 	private Validators<MoradorDto> validator;
@@ -50,18 +45,8 @@ public class MoradorConsumerServiceImpl implements ConsumerService<MoradorDto> {
 				throw new AmqpRejectAndDontRequeueException(erro.getDetalhe()); 
 			});			
 		}else {
-			if(dto.getResidenciaId() != 0L && dto.getId() == null) {
-				log.info("Registrando com vinculo de residência...");
-				VinculoResidencia vinculo = VinculoResidencia.builder()
-						.morador(this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto)))
-						.residencia(dto.getResidenciaEntity())
-						.guide(dto.getGuide())
-						.build();	
-				vinculoResidenciaRepository.save(vinculo);					
-			}else {
-				log.info("Registrando sem vinculo de residência...");
-				this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto));
-			}
+			log.info("Registrando sem vinculo de residência...");
+			this.moradorRepository.save(this.moradorMapper.moradorDtoToMorador(dto));
 		}	
 		
 	}
