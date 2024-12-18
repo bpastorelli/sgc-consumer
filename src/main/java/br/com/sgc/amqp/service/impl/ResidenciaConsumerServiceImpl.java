@@ -46,27 +46,8 @@ public class ResidenciaConsumerServiceImpl implements ConsumerService<Residencia
 				throw new AmqpRejectAndDontRequeueException(erro.getDetalhe()); 
 			});			
 		}else {
-			
-			if(dto.getId() != null && dto.getTicketMorador() != null) {
-				log.info("Registrando vinculo de morador a residência existente...");
-				VinculoResidencia vinculo = VinculoResidencia.builder()
-						.morador(dto.getMorador().get())
-						.residencia(this.residenciaMapper.residenciaDtoToResidencia(dto))
-						.guide(dto.getGuide())
-						.build();	
-				vinculoResidenciaRepository.save(vinculo);	
-			}else if(dto.getId() == null && dto.getTicketMorador() != null ) {
-				log.info("Registrando residencia com morador vinculado...");
-				VinculoResidencia vinculo = VinculoResidencia.builder()
-						.morador(dto.getMorador().get())
-						.residencia(this.residenciaRepository.save(this.residenciaMapper.residenciaDtoToResidencia(dto)))
-						.guide(dto.getGuide())
-						.build();	
-				vinculoResidenciaRepository.save(vinculo);									
-			}else {
-				log.info("Registrando residencia sem morador vinculado...");
-				this.residenciaRepository.save(this.residenciaMapper.residenciaDtoToResidencia(dto));
-			}
+			log.info("Registrando residencia...");
+			this.residenciaRepository.save(this.residenciaMapper.residenciaDtoToResidencia(dto));
 		}	
 		
 	}
