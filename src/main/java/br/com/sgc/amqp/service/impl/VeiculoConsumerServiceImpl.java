@@ -52,7 +52,7 @@ public class VeiculoConsumerServiceImpl implements ConsumerService<VeiculoDto> {
 				throw new AmqpRejectAndDontRequeueException(erro.getDetalhe()); 
 			});			
 		}else {
-			if(dto.getVisitanteId() != 0L) {
+			if(dto.getVisitanteId().compareTo(0L) != 0 && dto.getId() == null) {
 				vinculoVeiculoRepository.save(this.veiculoMapper.veiculoToVinculoVeiculo(this.veiculoRepository.save(veiculo)));				
 			}else {
 				this.veiculoRepository.save(veiculo);

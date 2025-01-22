@@ -26,6 +26,9 @@ public class ValidarCadastroVeiculo implements Validators<VeiculoDto> {
 		
 		RegistroException errors = new RegistroException();
 		
+		if (t.getVisitanteId() == null)
+			t.setVisitanteId(0L);
+		
 		if(t.getId() == null || t.getId() == 0) {
 			
 			if(t.getPlaca() == null) 
@@ -41,6 +44,7 @@ public class ValidarCadastroVeiculo implements Validators<VeiculoDto> {
 			if(!veiculo.isPresent())
 				errors.getErros().add(new ErroRegistro("", TITULO, " Veículo inexistente!"));
 			else {
+				t.setPlaca(veiculo.get().getPlaca());
 				t.setDataCriacao(veiculo.get().getDataCriacao());
 			}
 			
